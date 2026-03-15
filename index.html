@@ -1,0 +1,271 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Add Taylor Helman to Your Contacts</title>
+  <style>
+    :root {
+      --bg: #111111;
+      --card: #1b1b1b;
+      --card-2: #242424;
+      --text: #f5f5f5;
+      --muted: #c9c9c9;
+      --accent: #d6a24a;
+      --accent-2: #f0c36d;
+      --border: rgba(255,255,255,0.08);
+      --shadow: 0 18px 50px rgba(0,0,0,0.35);
+      --radius: 22px;
+    }
+
+    * { box-sizing: border-box; }
+
+    body {
+      margin: 0;
+      font-family: Inter, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+      background:
+        radial-gradient(circle at top, rgba(214,162,74,0.16), transparent 28%),
+        linear-gradient(180deg, #0f0f10 0%, #151515 100%);
+      color: var(--text);
+      min-height: 100vh;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 24px;
+    }
+
+    .wrap {
+      width: 100%;
+      max-width: 760px;
+    }
+
+    .card {
+      background: linear-gradient(180deg, rgba(255,255,255,0.03), rgba(255,255,255,0.015));
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      box-shadow: var(--shadow);
+      overflow: hidden;
+      backdrop-filter: blur(10px);
+    }
+
+    .hero {
+      padding: 36px 28px 22px;
+      background: linear-gradient(180deg, rgba(214,162,74,0.16), rgba(214,162,74,0.02));
+      border-bottom: 1px solid var(--border);
+      text-align: center;
+    }
+
+    .badge {
+      display: inline-block;
+      margin-bottom: 14px;
+      padding: 8px 14px;
+      border-radius: 999px;
+      background: rgba(214,162,74,0.14);
+      color: var(--accent-2);
+      font-size: 12px;
+      font-weight: 700;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+    }
+
+    h1 {
+      margin: 0;
+      font-size: clamp(30px, 5vw, 46px);
+      line-height: 1.05;
+    }
+
+    .sub {
+      margin: 14px auto 0;
+      max-width: 580px;
+      color: var(--muted);
+      font-size: 16px;
+      line-height: 1.6;
+    }
+
+    .contact-box {
+      margin: 22px auto 0;
+      max-width: 560px;
+      background: rgba(255,255,255,0.04);
+      border: 1px solid var(--border);
+      border-radius: 18px;
+      padding: 18px;
+    }
+
+    .contact-name {
+      font-size: 20px;
+      font-weight: 800;
+      margin-bottom: 6px;
+    }
+
+    .contact-meta {
+      color: var(--muted);
+      font-size: 15px;
+      line-height: 1.6;
+      word-break: break-word;
+    }
+
+    .section {
+      padding: 24px 22px 28px;
+    }
+
+    .grid {
+      display: grid;
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      gap: 14px;
+    }
+
+    .btn {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      text-align: center;
+      gap: 10px;
+      min-height: 66px;
+      padding: 16px;
+      border-radius: 18px;
+      text-decoration: none;
+      font-weight: 800;
+      font-size: 16px;
+      border: 1px solid var(--border);
+      background: var(--card-2);
+      color: var(--text);
+      transition: transform 0.16s ease, border-color 0.16s ease, background 0.16s ease;
+    }
+
+    .btn:hover {
+      transform: translateY(-2px);
+      border-color: rgba(214,162,74,0.55);
+      background: #2a2a2a;
+    }
+
+    .btn.primary {
+      background: linear-gradient(180deg, var(--accent-2), var(--accent));
+      color: #161616;
+      border: none;
+    }
+
+    .btn.primary:hover {
+      background: linear-gradient(180deg, #f5cb79, #dca54d);
+    }
+
+    .small-note {
+      margin-top: 16px;
+      text-align: center;
+      color: var(--muted);
+      font-size: 14px;
+      line-height: 1.5;
+    }
+
+    .steps {
+      margin-top: 24px;
+      display: grid;
+      gap: 12px;
+    }
+
+    .step {
+      background: rgba(255,255,255,0.03);
+      border: 1px solid var(--border);
+      border-radius: 18px;
+      padding: 16px;
+    }
+
+    .step strong {
+      display: block;
+      margin-bottom: 6px;
+      font-size: 15px;
+    }
+
+    .footer {
+      padding: 0 22px 24px;
+      text-align: center;
+      color: #a9a9a9;
+      font-size: 13px;
+      line-height: 1.55;
+    }
+
+    code {
+      background: rgba(255,255,255,0.06);
+      padding: 2px 7px;
+      border-radius: 8px;
+      color: #fff;
+    }
+
+    @media (max-width: 640px) {
+      .hero { padding: 30px 18px 20px; }
+      .section { padding: 20px 16px 22px; }
+      .footer { padding: 0 16px 18px; }
+      .grid { grid-template-columns: 1fr; }
+      .btn { min-height: 60px; }
+    }
+  </style>
+</head>
+<body>
+  <div class="wrap">
+    <div class="card">
+      <div class="hero">
+        <div class="badge">Soul Fire Tattoo Studio</div>
+        <h1>Add Taylor to your contacts</h1>
+        <p class="sub">
+          This helps make sure appointment updates, booking replies, and important tattoo emails land in your inbox instead of spam or junk.
+        </p>
+
+        <div class="contact-box">
+          <div class="contact-name">Taylor Helman</div>
+          <div class="contact-meta">
+            Soul Fire Tattoo Studio<br />
+            <strong>Email:</strong> taylorhelmantattoo@inkde.sk
+          </div>
+        </div>
+      </div>
+
+      <div class="section">
+        <div class="grid">
+          <a class="btn primary" href="/taylor-helman-tattoo.vcf" download>
+            Download Contact Card
+          </a>
+
+          <a class="btn" href="mailto:taylorhelmantattoo@inkde.sk?subject=Add%20Taylor%20to%20Safe%20Sender%20List&body=Please%20add%20taylorhelmantattoo%40inkde.sk%20to%20my%20contacts%20and%20safe%20sender%20list.">
+            Open Email App
+          </a>
+
+          <a class="btn" href="https://contacts.google.com/" target="_blank" rel="noopener noreferrer">
+            Open Google Contacts
+          </a>
+
+          <a class="btn" href="https://outlook.live.com/people/" target="_blank" rel="noopener noreferrer">
+            Open Outlook Contacts
+          </a>
+        </div>
+
+        <p class="small-note">
+          Best option: tap <strong>Download Contact Card</strong>, then save Taylor as a contact on your phone or computer.
+        </p>
+
+        <div class="steps">
+          <div class="step">
+            <strong>iPhone / Apple Mail</strong>
+            Tap <em>Download Contact Card</em>, then tap <em>Add Contact</em> and save.
+          </div>
+          <div class="step">
+            <strong>Gmail / Android</strong>
+            Download the contact card and open it, or use <em>Open Google Contacts</em> to add Taylor manually.
+          </div>
+          <div class="step">
+            <strong>Outlook / Hotmail</strong>
+            Use <em>Open Outlook Contacts</em> or save the downloaded contact card to your address book.
+          </div>
+          <div class="step">
+            <strong>Already in spam or junk?</strong>
+            Move Taylor's email to your inbox and mark it as <em>Not Spam</em> or <em>Not Junk</em> after saving the contact.
+          </div>
+        </div>
+      </div>
+
+      <div class="footer">
+        Add this email to your trusted contacts: <code>taylorhelmantattoo@inkde.sk</code><br />
+        This page cannot automatically whitelist an address inside every email provider, but saving the contact and marking messages as safe is the most reliable cross-platform solution.
+      </div>
+    </div>
+  </div>
+</body>
+</html>
