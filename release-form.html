@@ -1,0 +1,575 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Tattoo Release Form | Taylor Helman Tattoo</title>
+  <style>
+    /* ── Design tokens — exact match to site system ──────────────────────────── */
+    :root {
+      --bg:               #9f6d67;
+      --surface:          rgba(255,255,255,0.20);
+      --surface-strong:   rgba(255,255,255,0.26);
+      --surface-border:   rgba(255,255,255,0.30);
+      --text-dark:        #1f2937;
+      --text-soft:        rgba(31,41,55,0.82);
+      --text-light:       #ffffff;
+      --shadow-soft:      0 10px 30px rgba(0,0,0,0.14);
+      --shadow-lift:      0 16px 40px rgba(0,0,0,0.20);
+
+      --btn-request:       #eddecf;
+      --btn-request-hover: #e4d5c6;
+      --btn-touchup:       #d1aa99;
+      --btn-touchup-hover: #c89f8d;
+      --btn-email:         #7a867f;
+      --btn-email-hover:   #707b75;
+      --btn-dark:          #3e4442;
+      --btn-dark-hover:    #343a38;
+
+      --radius-card:   14px;
+      --radius-pill:   10px;
+      --radius-button: 8px;
+      --max-width:     760px;
+    }
+
+    * { box-sizing: border-box; }
+    html { scroll-behavior: smooth; }
+
+    body {
+      margin: 0;
+      font-family: Arial, Helvetica, sans-serif;
+      background: var(--bg);
+      color: var(--text-dark);
+      min-height: 100vh;
+      padding: 20px 14px 110px;
+    }
+
+    .wrap {
+      width: 100%;
+      max-width: var(--max-width);
+      margin: 0 auto;
+    }
+
+    /* ── Card base ───────────────────────────────────────────────────────────── */
+    .card {
+      background: var(--surface);
+      border: 1px solid var(--surface-border);
+      border-radius: var(--radius-card);
+      box-shadow: var(--shadow-soft);
+      backdrop-filter: blur(6px);
+      -webkit-backdrop-filter: blur(6px);
+    }
+
+    /* Primary CTA card — slightly elevated to signal importance */
+    .card-primary {
+      background: rgba(255,255,255,0.24);
+      border: 1px solid rgba(255,255,255,0.36);
+      border-radius: var(--radius-card);
+      box-shadow: var(--shadow-lift);
+      backdrop-filter: blur(8px);
+      -webkit-backdrop-filter: blur(8px);
+    }
+
+    /* ── Hero ────────────────────────────────────────────────────────────────── */
+    .hero {
+      text-align: center;
+      margin-bottom: 14px;
+    }
+
+    .name-pill {
+      display: inline-block;
+      background: var(--surface);
+      border: 1px solid var(--surface-border);
+      color: var(--text-dark);
+      padding: 12px 18px;
+      border-radius: var(--radius-pill);
+      font-weight: 700;
+      font-size: 28px;
+      line-height: 1.15;
+      box-shadow: var(--shadow-soft);
+      backdrop-filter: blur(6px);
+      -webkit-backdrop-filter: blur(6px);
+      text-decoration: none;
+    }
+
+    /* ── Section label pill ──────────────────────────────────────────────────── */
+    .label-pill {
+      display: inline-block;
+      background: var(--surface-strong);
+      border: 1px solid var(--surface-border);
+      border-radius: 999px;
+      padding: 7px 12px;
+      font-size: 12px;
+      font-weight: 700;
+      letter-spacing: 0.05em;
+      text-transform: uppercase;
+      margin-bottom: 14px;
+    }
+
+    /* ── Intro card ──────────────────────────────────────────────────────────── */
+    .intro-card {
+      margin-top: 14px;
+      padding: 22px 18px;
+      text-align: center;
+    }
+
+    .intro-card h1 {
+      margin: 0 0 10px;
+      font-size: 24px;
+      line-height: 1.15;
+    }
+
+    .intro-card p {
+      margin: 0;
+      color: var(--text-soft);
+      font-size: 15px;
+      line-height: 1.7;
+    }
+
+    /* ── Primary CTA card ────────────────────────────────────────────────────── */
+    .primary-cta-card {
+      margin-top: 14px;
+      padding: 22px 18px;
+    }
+
+    .primary-cta-card h2 {
+      margin: 0 0 6px;
+      font-size: 20px;
+      line-height: 1.2;
+    }
+
+    .primary-cta-card .sub {
+      color: var(--text-soft);
+      font-size: 14px;
+      line-height: 1.65;
+      margin: 0 0 20px;
+    }
+
+    /* ── Buttons ─────────────────────────────────────────────────────────────── */
+    .btn {
+      display: block;
+      width: 100%;
+      text-align: center;
+      text-decoration: none;
+      color: var(--text-dark);
+      font-weight: 700;
+      font-size: 15px;
+      line-height: 1.2;
+      padding: 17px 14px;
+      border-radius: var(--radius-button);
+      border: none;
+      cursor: pointer;
+      font-family: inherit;
+      transition: transform 0.15s ease, background 0.15s ease, box-shadow 0.15s ease;
+      box-shadow: 0 3px 10px rgba(0,0,0,0.08);
+    }
+
+    .btn:hover,
+    .btn:focus-visible {
+      transform: translateY(-1px);
+      box-shadow: 0 6px 16px rgba(0,0,0,0.13);
+      outline: none;
+    }
+
+    .btn:active {
+      transform: translateY(0);
+    }
+
+    .btn-form {
+      background: var(--btn-dark);
+      color: var(--text-light);
+      font-size: 16px;
+      padding: 18px 14px;
+    }
+
+    .btn-form:hover,
+    .btn-form:focus-visible {
+      background: var(--btn-dark-hover);
+    }
+
+    .btn-request {
+      background: var(--btn-request);
+    }
+
+    .btn-request:hover,
+    .btn-request:focus-visible {
+      background: var(--btn-request-hover);
+    }
+
+    .btn-secondary {
+      background: var(--surface-strong);
+      border: 1px solid var(--surface-border);
+      color: var(--text-dark);
+    }
+
+    .btn-secondary:hover,
+    .btn-secondary:focus-visible {
+      background: rgba(255,255,255,0.34);
+    }
+
+    .btn-stack { display: grid; gap: 10px; }
+
+    /* ── Notes card ──────────────────────────────────────────────────────────── */
+    .notes-card {
+      margin-top: 14px;
+      padding: 20px 18px;
+    }
+
+    .notes-card h2 {
+      margin: 0 0 16px;
+      font-size: 18px;
+      line-height: 1.2;
+    }
+
+    .check-list {
+      list-style: none;
+      margin: 0;
+      padding: 0;
+      display: grid;
+      gap: 0;
+    }
+
+    .check-item {
+      display: flex;
+      align-items: flex-start;
+      gap: 12px;
+      padding: 13px 0;
+      border-bottom: 1px solid rgba(255,255,255,0.14);
+    }
+
+    .check-item:last-child {
+      border-bottom: none;
+      padding-bottom: 0;
+    }
+
+    .check-item:first-child {
+      padding-top: 0;
+    }
+
+    .check-icon {
+      width: 22px;
+      height: 22px;
+      border-radius: 50%;
+      background: var(--surface-strong);
+      border: 1px solid var(--surface-border);
+      flex-shrink: 0;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 12px;
+      margin-top: 1px;
+    }
+
+    .check-text {
+      flex: 1;
+    }
+
+    .check-text strong {
+      display: block;
+      font-size: 14px;
+      font-weight: 700;
+      line-height: 1.3;
+      margin-bottom: 2px;
+    }
+
+    .check-text span {
+      display: block;
+      font-size: 13px;
+      color: var(--text-soft);
+      line-height: 1.6;
+    }
+
+    /* ── Repeat CTA card ─────────────────────────────────────────────────────── */
+    .repeat-cta-card {
+      margin-top: 14px;
+      padding: 18px;
+    }
+
+    .repeat-cta-card p {
+      margin: 0 0 14px;
+      font-size: 14px;
+      color: var(--text-soft);
+      line-height: 1.6;
+      text-align: center;
+    }
+
+    /* ── Privacy card ────────────────────────────────────────────────────────── */
+    .privacy-card {
+      margin-top: 14px;
+      padding: 20px 18px;
+    }
+
+    .privacy-card h2 {
+      margin: 0 0 10px;
+      font-size: 17px;
+      line-height: 1.2;
+    }
+
+    .privacy-card p {
+      margin: 0 0 10px;
+      color: var(--text-soft);
+      font-size: 14px;
+      line-height: 1.7;
+    }
+
+    .privacy-card p:last-child {
+      margin-bottom: 0;
+    }
+
+    .privacy-list {
+      margin: 10px 0 0;
+      padding: 0;
+      list-style: none;
+      display: grid;
+      gap: 8px;
+    }
+
+    .privacy-row {
+      display: flex;
+      align-items: flex-start;
+      gap: 10px;
+      font-size: 14px;
+      color: var(--text-soft);
+      line-height: 1.55;
+    }
+
+    .privacy-dot {
+      width: 6px;
+      height: 6px;
+      border-radius: 50%;
+      background: var(--text-soft);
+      flex-shrink: 0;
+      margin-top: 6px;
+    }
+
+    /* ── Help card ───────────────────────────────────────────────────────────── */
+    .help-card {
+      margin-top: 14px;
+      padding: 20px 18px;
+      text-align: center;
+    }
+
+    .help-card h2 {
+      margin: 0 0 8px;
+      font-size: 18px;
+      line-height: 1.2;
+    }
+
+    .help-card p {
+      margin: 0 0 16px;
+      color: var(--text-soft);
+      font-size: 14px;
+      line-height: 1.65;
+    }
+
+    /* ── Footer nav links ────────────────────────────────────────────────────── */
+    .footer-links {
+      margin-top: 14px;
+      padding: 18px 16px;
+      text-align: center;
+    }
+
+    .footer-links .mini-links {
+      display: grid;
+      gap: 8px;
+    }
+
+    .footer-links .mini-links a {
+      text-decoration: none;
+      font-weight: 700;
+      color: var(--text-dark);
+      font-size: 14px;
+    }
+
+    /* ── Sticky bottom nav ───────────────────────────────────────────────────── */
+    .sticky-cta {
+      position: fixed;
+      left: 0; right: 0; bottom: 0;
+      z-index: 999;
+      padding: 10px 10px calc(10px + env(safe-area-inset-bottom));
+      background: linear-gradient(to top, rgba(159,109,103,0.98), rgba(159,109,103,0.88));
+      backdrop-filter: blur(8px);
+      -webkit-backdrop-filter: blur(8px);
+      border-top: 1px solid rgba(255,255,255,0.18);
+    }
+
+    .sticky-cta-inner {
+      max-width: var(--max-width);
+      margin: 0 auto;
+      display: grid;
+      grid-template-columns: 1.2fr 1fr 1fr 1fr;
+      gap: 8px;
+    }
+
+    .sticky-btn {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      min-height: 46px;
+      text-decoration: none;
+      border-radius: 10px;
+      font-size: 12px;
+      font-weight: 700;
+      text-align: center;
+      line-height: 1.2;
+      padding: 8px;
+      box-shadow: 0 3px 10px rgba(0,0,0,0.10);
+    }
+
+    .sticky-btn.request  { background: var(--btn-request); color: var(--text-dark); }
+    .sticky-btn.touchup  { background: var(--btn-touchup); color: var(--text-dark); }
+    .sticky-btn.home     { background: var(--btn-email);   color: var(--text-light); }
+    .sticky-btn.policies { background: var(--btn-dark);    color: var(--text-light); }
+    .sticky-btn.active   { opacity: 0.7; pointer-events: none; }
+
+    /* ── Responsive ──────────────────────────────────────────────────────────── */
+    @media (min-width: 768px) {
+      body { padding: 28px 18px 120px; }
+      .name-pill { font-size: 32px; }
+      .intro-card h1 { font-size: 28px; }
+      .intro-card { padding: 26px 24px; }
+      .primary-cta-card { padding: 26px 24px; }
+      .primary-cta-card h2 { font-size: 22px; }
+      .btn-form { font-size: 17px; }
+    }
+
+    @media (max-width: 520px) {
+      .name-pill { font-size: 22px; width: 100%; }
+      .sticky-cta-inner { grid-template-columns: 1fr 1fr 1fr 1fr; }
+      .sticky-btn { font-size: 11px; min-height: 48px; }
+    }
+  </style>
+</head>
+<body>
+  <div class="wrap">
+
+    <!-- ── Hero ──────────────────────────────────────────────────────────────── -->
+    <div class="hero">
+      <a class="name-pill" href="index.html">Taylor Helman Tattoo</a>
+    </div>
+
+    <!-- ── Page intro ────────────────────────────────────────────────────────── -->
+    <div class="card intro-card">
+      <h1>Tattoo Release &amp; Consent</h1>
+      <p>This form is required before your appointment. It covers health disclosures, aftercare acknowledgment, and your consent to proceed with the tattoo. It takes about 2&ndash;3 minutes to complete.</p>
+    </div>
+
+    <!-- ── PRIMARY CTA ───────────────────────────────────────────────────────── -->
+    <!--
+      ┌─ TODO: ADD STABPAD FORM URL ──────────────────────────────────────────┐
+      │ 1. Log in to stabpad.com with your studio account                     │
+      │ 2. Open your release / consent form                                   │
+      │ 3. Click Share → copy the public link                                 │
+      │    (looks like: https://stabpad.com/f/xxxxxxxx)                       │
+      │ 4. Replace the href="#" on the <a id="formLink"> tag below            │
+      │ 5. Do the same for <a id="formLinkRepeat"> (~55 lines below)          │
+      └───────────────────────────────────────────────────────────────────────┘
+    -->
+    <div class="card-primary primary-cta-card">
+      <div class="label-pill">Before Your Appointment</div>
+      <h2>Complete Your Release Form</h2>
+      <p class="sub">Required for all new tattoo sessions. Please fill this out at least 24 hours before your scheduled appointment so there are no delays on the day.</p>
+      <a class="btn btn-form" href="https://release.taylorhelmantattoo.com" target="_blank" rel="noopener noreferrer" id="formLink">Open Release Form &rarr;</a>
+    </div>
+
+    <!-- ── What the form covers ──────────────────────────────────────────────── -->
+    <div class="card notes-card">
+      <div class="label-pill">What&rsquo;s Covered</div>
+      <ul class="check-list">
+        <li class="check-item">
+          <span class="check-icon">&#10003;</span>
+          <div class="check-text">
+            <strong>Health &amp; Skin Disclosures</strong>
+            <span>Relevant conditions are disclosed in advance so Taylor can adjust technique or recommend waiting if needed.</span>
+          </div>
+        </li>
+        <li class="check-item">
+          <span class="check-icon">&#10003;</span>
+          <div class="check-text">
+            <strong>Aftercare Acknowledgment</strong>
+            <span>You confirm you&rsquo;ve read and understood the aftercare instructions provided during booking.</span>
+          </div>
+        </li>
+        <li class="check-item">
+          <span class="check-icon">&#10003;</span>
+          <div class="check-text">
+            <strong>Consent to Photograph</strong>
+            <span>Permission to photograph healed work for portfolio and social use. You can opt out during the form.</span>
+          </div>
+        </li>
+        <li class="check-item">
+          <span class="check-icon">&#10003;</span>
+          <div class="check-text">
+            <strong>Age &amp; Identity Confirmation</strong>
+            <span>You confirm you are 18 or older. Valid government-issued ID is required on the day of your appointment.</span>
+          </div>
+        </li>
+        <li class="check-item">
+          <span class="check-icon">&#10003;</span>
+          <div class="check-text">
+            <strong>Design &amp; Placement Approval</strong>
+            <span>You acknowledge the final design and placement have been agreed upon and the work is proceeding as discussed.</span>
+          </div>
+        </li>
+      </ul>
+    </div>
+
+    <!-- ── Repeat CTA ────────────────────────────────────────────────────────── -->
+    <div class="card repeat-cta-card">
+      <p>Ready? The form opens in a new tab and only takes a few minutes.</p>
+      <a class="btn btn-request" href="https://release.taylorhelmantattoo.com" target="_blank" rel="noopener noreferrer" id="formLinkRepeat">Open Release Form</a>
+    </div>
+
+    <!-- ── Privacy ───────────────────────────────────────────────────────────── -->
+    <div class="card privacy-card">
+      <div class="label-pill">Your Privacy</div>
+      <p>The information you provide on this form is used only for appointment coordination and record-keeping as required by standard tattoo studio practice.</p>
+      <ul class="privacy-list">
+        <li class="privacy-row">
+          <span class="privacy-dot"></span>
+          <span>Your responses are stored securely through the form provider and are never sold or shared with third parties.</span>
+        </li>
+        <li class="privacy-row">
+          <span class="privacy-dot"></span>
+          <span>Health disclosures are treated as confidential and are only used to ensure your session is safe.</span>
+        </li>
+        <li class="privacy-row">
+          <span class="privacy-dot"></span>
+          <span>Photo consent is opt-in. Declining does not affect your appointment in any way.</span>
+        </li>
+      </ul>
+    </div>
+
+    <!-- ── Help ──────────────────────────────────────────────────────────────── -->
+    <div class="card help-card">
+      <div class="label-pill">Questions?</div>
+      <h2>Need Help With the Form?</h2>
+      <p>If you have questions about what&rsquo;s being asked, or run into any issues completing the form, reach out directly and Taylor will walk you through it before your appointment.</p>
+      <div class="btn-stack">
+        <a class="btn btn-secondary" href="mailto:taylorhelmantattoo@inkde.sk">Email Taylor</a>
+      </div>
+    </div>
+
+    <!-- ── Footer nav ─────────────────────────────────────────────────────────── -->
+    <div class="card footer-links">
+      <div class="mini-links">
+        <a href="policies.html">Read Policies &amp; FAQ</a>
+        <a href="availability.html">View Availability</a>
+        <a href="index.html">Back to Home</a>
+      </div>
+    </div>
+
+  </div><!-- /wrap -->
+
+  <!-- ── Sticky bottom nav ─────────────────────────────────────────────────── -->
+  <nav class="sticky-cta" aria-label="Main navigation">
+    <div class="sticky-cta-inner">
+      <a class="sticky-btn request" href="https://inkde.sk/taylorhelmantattoo/book/018f9c9c-d2b6-50dc-5765-f9b922db88c8">Start&nbsp;Request</a>
+      <a class="sticky-btn touchup" href="https://inkde.sk/taylorhelmantattoo/book/018f9c9c-d2b6-50dc-5765-f9b922db88c8">Touch-Up</a>
+      <a class="sticky-btn home"    href="index.html">Home</a>
+      <a class="sticky-btn policies" href="policies.html">Policies</a>
+    </div>
+  </nav>
+
+</body>
+</html>

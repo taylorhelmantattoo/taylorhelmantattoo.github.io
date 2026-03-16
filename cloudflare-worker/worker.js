@@ -1,4 +1,4 @@
-/**
+What would you like your workers.dev subdomain to be? »/taylorhelmantattoo
  * taylorhelmantattoo-availability — Cloudflare Worker
  *
  * Queries Google Calendar free/busy data and returns sanitized availability

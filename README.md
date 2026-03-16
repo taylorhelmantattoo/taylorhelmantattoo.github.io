@@ -1,7 +1,7 @@
 # Taylor Helman Tattoo — Website
 
-**Live site:** [taylorhelmantattoo.github.io](https://taylorhelmantattoo.github.io)  
-**Hosted via:** GitHub Pages
+**Live site:** [taylorhelmantattoo.com](https://taylorhelmantattoo.com)  
+**Hosted via:** GitHub Pages (custom domain via `CNAME`)
 
 ---
 
@@ -66,7 +66,10 @@ This is the most reliable path to a successful VCF save — once the user is in 
 **Layer 3 — "Copy Email Address" clipboard button**  
 A fallback that works inside the IAB. Uses `navigator.clipboard.writeText()` with a `document.execCommand('copy')` fallback. The button label changes to "Copied!" on success so the user gets clear confirmation.
 
-**Layer 4 — `mailto:` link (already present)**  
+**Layer 4 — QR code (scan to add contact)**  
+A QR code on the page encodes the full vCard data. On iPhone the native camera app (accessible from the Control Center without leaving Instagram) can scan it and trigger an "Add to Contacts" prompt — no browser switch needed. The QR card is hidden if the image fails to load.
+
+**Layer 5 — `mailto:` link (already present)**  
 `mailto:taylorhelmantattoo@inkde.sk` opens the device's native mail app directly from within the IG IAB. This is a reliable last resort for users who cannot or will not switch browser.
 
 ### What doesn't work
@@ -80,10 +83,131 @@ A fallback that works inside the IAB. Uses `navigator.clipboard.writeText()` wit
 
 | File | Purpose |
 |------|---------|
-| `index.html` | Main landing page — email save, booking CTAs, contact details |
+| `index.html` | Main landing page — availability summary, booking CTAs, email save, contact details |
+| `release-form.html` | Release/consent form entry page — links to `release.taylorhelmantattoo.com` |
+| `availability.html` | Full availability calendar — live data from Cloudflare Worker, Wed–Sat 11 AM–7 PM ET |
+| `portfolio.html` | Portfolio gallery — Instagram feed via Behold widget, filterable by style |
 | `policies.html` | Policies & FAQ |
 | `taylor-helman-tattoo.vcf` | vCard contact card (VERSION 3.0) |
-| `CNAME` | Custom domain config for GitHub Pages |
+| `CNAME` | Custom domain config for GitHub Pages (`taylorhelmantattoo.com`) |
+| `cloudflare-worker/worker.js` | Cloudflare Worker — queries Google Calendar free/busy API |
+| `cloudflare-worker/wrangler.toml` | Wrangler deployment config (non-sensitive vars only) |
+
+---
+
+## Availability System (Cloudflare Worker)
+
+Real-time availability is powered by a **Cloudflare Worker** (`taylorhelmantattoo-availability`) that sits between the site and Google Calendar.
+
+### How it works
+
+1. `availability.html` (and a summary widget on `index.html`) fetches JSON from the worker endpoint:  
+   `https://taylorhelmantattoo-availability.taylorhelmantattoo.workers.dev/api/availability`
+2. The worker authenticates to Google Calendar using a **service account** (RS256 JWT — no third-party libraries) and calls the [free/busy API](https://developers.google.com/calendar/api/v3/reference/freebusy/query).
+3. It computes per-day availability statuses (`available`, `limited`, `booked`, `closed`, `flash-day`, `travel`, `convention`) and morning/afternoon window labels.
+4. The response is cached for **15 minutes** via Cloudflare's Cache API.
+
+### Privacy guarantee
+The free/busy API returns **only opaque time blocks** — no event titles, client names, descriptions, or attendees. This is a hard Google API contract, not a server-side filter.
+
+### Schedule configuration
+All schedule settings live in the `CONFIG` object at the top of `worker.js`. After editing, deploy with:
+
+```bash
+npx wrangler deploy
+```
+
+| Setting | Value |
+|---------|-------|
+| Working days | Wed–Sat (3–6) |
+| Working hours | 11 AM – 7 PM ET |
+| Booking horizon | 60 days |
+| Lead time | 48 hours |
+| Cache TTL | 15 minutes |
+
+### Special day overrides
+Add entries to `CONFIG.specialDays` in `worker.js` to mark specific dates (e.g. conventions, flash days, travel):
+
+```js
+specialDays: {
+  "2026-04-12": { status: "closed",    label: "Convention" },
+  "2026-05-17": { status: "flash-day", label: "Flash Day"  },
+}
+```
+
+### Secrets
+`GOOGLE_SERVICE_ACCOUNT_JSON` is stored in **Cloudflare encrypted secrets only** — never committed to Git. Set it with:
+
+```bash
+npx wrangler secret put GOOGLE_SERVICE_ACCOUNT_JSON
+```
+
+---
+
+## Portfolio Page
+
+`portfolio.html` embeds an **Instagram feed via [Behold](https://behold.so/)** (`<behold-widget feed-id="...">`), loaded dynamically from `https://w.behold.so/widget.js`.
+
+Filter tabs (All Work, Micro Realism, Fine-Line Florals, Pet Portraits, Flash) are in place but only the **All Work** tab is live — filtered category feeds are marked as coming soon.
+
+---
+
+## Release Form (release.taylorhelmantattoo.com)
+
+The tattoo consent/release form is hosted on a separate subdomain (`release.taylorhelmantattoo.com`) running **Stabpad** — a PHP-based tattooist release-form system — on **InfinityFree** hosting.
+
+### Setup summary
+
+| Component | Detail |
+|-----------|--------|
+| Subdomain | `release.taylorhelmantattoo.com` |
+| Server IP | `185.27.134.139` |
+| DNS record | `A release → 185.27.134.139` (GoDaddy) |
+| Hosting | InfinityFree (free tier) |
+| Language | PHP (plain, no framework) |
+| Local files | `C:\TaylorHelmanTattoo\release\` |
+
+### How it works
+
+1. Client taps "Open Release Form" on `release-form.html` → goes to `https://release.taylorhelmantattoo.com`
+2. Client fills out the consent form (name, DOB, health disclosures, signature checkboxes)
+3. On submit, `functions.inc.php` renders the completed form as a PDF using **DOMPDF**
+4. The PDF is emailed to `taylorhelmantattoo@inkde.sk` (+ CC to the client's email) via **PHPMailer + Gmail SMTP**
+
+### PHP mailer configuration
+
+The mailer is configured in `C:\TaylorHelmanTattoo\release\smtp_config.php`.
+
+**Before uploading to InfinityFree, fill in the Gmail App Password:**
+
+1. Open `C:\TaylorHelmanTattoo\release\smtp_config.php`
+2. Replace `YOUR_APP_PASSWORD_HERE` with the 16-character Gmail App Password
+3. Do **not** commit this file to Git — it contains a credential
+
+### Deploying to InfinityFree
+
+Upload the entire contents of `C:\TaylorHelmanTattoo\release\` to the `htdocs/` directory of the InfinityFree account via the File Manager (or FTP).
+
+Key files:
+
+| File | Purpose |
+|------|---------|
+| `configs/tattoo.php` | Form configuration — fields, provisions, email settings, artist name |
+| `functions.inc.php` | Core logic — PDF rendering (DOMPDF) + email (PHPMailer) |
+| `smtp_config.php` | Gmail SMTP credentials — **keep out of Git** |
+| `phpmailer/` | PHPMailer v6 library files |
+| `dompdf/` | DOMPDF library for PDF generation |
+| `index.php` | Stabpad entry point |
+
+### Editing the form provisions
+
+Open `configs/tattoo.php`. Each entry in `$settings['provisions']` is one checkbox/question on the form. Fields:
+- `title` — heading text
+- `text` — full description shown to the client
+- `required` — `true` or `false`
+- `type` — `checkbox`, `yn` (yes/no), or `text`
+
+After editing, re-upload `configs/tattoo.php` to InfinityFree.
 
 ---
 
