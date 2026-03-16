@@ -1,428 +1,597 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Tattoo Policies & FAQ | Taylor Helman Tattoo</title>
+  <style>
+    :root {
+      --bg: #9f6d67;
+      --surface: rgba(255,255,255,0.20);
+      --surface-strong: rgba(255,255,255,0.26);
+      --surface-border: rgba(255,255,255,0.30);
+      --text-dark: #1f2937;
+      --text-soft: rgba(31,41,55,0.82);
+      --text-light: #ffffff;
+      --shadow-soft: 0 10px 30px rgba(0,0,0,0.14);
 
-<title>Tattoo Policies & FAQ | Taylor Helman Tattoo</title>
+      --btn-request: #eddecf;
+      --btn-request-hover: #e4d5c6;
 
-<style>
+      --btn-touchup: #d1aa99;
+      --btn-touchup-hover: #c89f8d;
 
-:root{
---bg:#111111;
---card:#1b1b1b;
---text:#f5f5f5;
---muted:#c9c9c9;
---accent:#d6a24a;
---accent2:#f0c36d;
---border:rgba(255,255,255,0.08);
---shadow:0 18px 50px rgba(0,0,0,0.35);
---radius:22px;
-}
+      --btn-email: #7a867f;
+      --btn-email-hover: #707b75;
 
-*{box-sizing:border-box;}
+      --btn-faq: #3e4442;
+      --btn-faq-hover: #343a38;
 
-body{
-margin:0;
-font-family:Inter,system-ui,-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif;
-background:
-radial-gradient(circle at top, rgba(214,162,74,0.16), transparent 28%),
-linear-gradient(180deg,#0f0f10 0%,#151515 100%);
-color:var(--text);
-min-height:100vh;
-padding:24px;
-}
+      --radius-card: 14px;
+      --radius-pill: 10px;
+      --radius-button: 8px;
+      --radius-image: 16px;
+      --max-width: 760px;
+    }
 
-.wrap{
-max-width:900px;
-margin:auto;
-}
+    * { box-sizing: border-box; }
 
-.card{
-background:linear-gradient(180deg,rgba(255,255,255,0.03),rgba(255,255,255,0.015));
-border:1px solid var(--border);
-border-radius:var(--radius);
-box-shadow:var(--shadow);
-overflow:hidden;
-}
+    html {
+      scroll-behavior: smooth;
+    }
 
-.hero{
-padding:36px 28px 24px;
-text-align:center;
-background:linear-gradient(180deg,rgba(214,162,74,0.16),rgba(214,162,74,0.02));
-border-bottom:1px solid var(--border);
-}
+    body {
+      margin: 0;
+      font-family: Arial, Helvetica, sans-serif;
+      background: var(--bg);
+      color: var(--text-dark);
+      min-height: 100vh;
+      padding: 20px 14px 110px;
+    }
 
-.badge{
-display:inline-block;
-padding:8px 14px;
-border-radius:999px;
-background:rgba(214,162,74,0.14);
-color:var(--accent2);
-font-size:12px;
-font-weight:700;
-letter-spacing:.08em;
-text-transform:uppercase;
-margin-bottom:12px;
-}
+    .wrap {
+      width: 100%;
+      max-width: var(--max-width);
+      margin: 0 auto;
+    }
 
-h1{
-margin:0;
-font-size:40px;
-}
+    .hero {
+      text-align: center;
+      margin-bottom: 14px;
+    }
 
-.sub{
-margin-top:14px;
-color:var(--muted);
-line-height:1.6;
-}
+    .name-pill {
+      display: inline-block;
+      background: var(--surface);
+      border: 1px solid var(--surface-border);
+      color: var(--text-dark);
+      padding: 12px 18px;
+      border-radius: var(--radius-pill);
+      font-weight: 700;
+      font-size: 28px;
+      line-height: 1.15;
+      box-shadow: var(--shadow-soft);
+      backdrop-filter: blur(6px);
+      -webkit-backdrop-filter: blur(6px);
+    }
 
-.notice{
-margin-top:20px;
-background:rgba(255,255,255,0.04);
-border:1px solid var(--border);
-border-radius:18px;
-padding:18px;
-line-height:1.6;
-}
+    .intro-card,
+    .cta-card,
+    .content-card {
+      background: var(--surface);
+      border: 1px solid var(--surface-border);
+      border-radius: var(--radius-card);
+      box-shadow: var(--shadow-soft);
+      backdrop-filter: blur(6px);
+      -webkit-backdrop-filter: blur(6px);
+    }
 
-.section{
-padding:24px;
-}
+    .intro-card {
+      margin-top: 14px;
+      padding: 18px 16px;
+      text-align: center;
+    }
 
-.policy{
-background:rgba(255,255,255,0.03);
-border:1px solid var(--border);
-border-radius:18px;
-padding:20px;
-margin-bottom:18px;
-}
+    .intro-card h1 {
+      margin: 0 0 10px;
+      font-size: 24px;
+      line-height: 1.15;
+    }
 
-.policy h2{
-margin-top:0;
-}
+    .intro-card p {
+      margin: 0;
+      color: var(--text-soft);
+      font-size: 15px;
+      line-height: 1.65;
+    }
 
-.policy p,
-.policy li{
-color:var(--muted);
-line-height:1.7;
-}
+    .cta-card {
+      margin-top: 14px;
+      padding: 14px;
+    }
 
-.policy ul{
-margin-left:18px;
-}
+    .cta-stack {
+      display: grid;
+      gap: 10px;
+    }
 
-.footer{
-padding:0 22px 24px;
-text-align:center;
-color:#a9a9a9;
-font-size:13px;
-}
+    .btn {
+      display: block;
+      width: 100%;
+      text-align: center;
+      text-decoration: none;
+      color: var(--text-dark);
+      font-weight: 700;
+      font-size: 15px;
+      line-height: 1.2;
+      padding: 16px 14px;
+      border-radius: var(--radius-button);
+      transition: transform 0.15s ease, background 0.15s ease, box-shadow 0.15s ease;
+      box-shadow: 0 3px 10px rgba(0,0,0,0.08);
+    }
 
-.button{
-display:inline-block;
-margin-top:10px;
-padding:14px 18px;
-border-radius:14px;
-text-decoration:none;
-font-weight:800;
-background:linear-gradient(180deg,var(--accent2),var(--accent));
-color:#161616;
-}
+    .btn:hover,
+    .btn:focus-visible {
+      transform: translateY(-1px);
+      outline: none;
+    }
 
-</style>
+    .btn-request {
+      background: var(--btn-request);
+    }
+
+    .btn-request:hover,
+    .btn-request:focus-visible {
+      background: var(--btn-request-hover);
+    }
+
+    .btn-touchup {
+      background: var(--btn-touchup);
+    }
+
+    .btn-touchup:hover,
+    .btn-touchup:focus-visible {
+      background: var(--btn-touchup-hover);
+    }
+
+    .btn-email {
+      background: var(--btn-email);
+      color: var(--text-light);
+    }
+
+    .btn-email:hover,
+    .btn-email:focus-visible {
+      background: var(--btn-email-hover);
+    }
+
+    .helper {
+      margin-top: 10px;
+      text-align: center;
+      color: var(--text-soft);
+      font-size: 13px;
+      line-height: 1.5;
+    }
+
+    .content-card {
+      margin-top: 14px;
+      padding: 14px;
+    }
+
+    .section-label {
+      display: inline-block;
+      margin-bottom: 12px;
+      background: var(--surface-strong);
+      border: 1px solid var(--surface-border);
+      border-radius: 999px;
+      padding: 8px 12px;
+      font-size: 12px;
+      font-weight: 700;
+      letter-spacing: 0.04em;
+      text-transform: uppercase;
+    }
+
+    .accordion {
+      display: grid;
+      gap: 10px;
+    }
+
+    details {
+      background: rgba(255,255,255,0.24);
+      border: 1px solid rgba(255,255,255,0.32);
+      border-radius: 12px;
+      overflow: hidden;
+    }
+
+    summary {
+      list-style: none;
+      cursor: pointer;
+      padding: 16px 44px 16px 16px;
+      font-weight: 700;
+      position: relative;
+      line-height: 1.35;
+    }
+
+    summary::-webkit-details-marker {
+      display: none;
+    }
+
+    summary::after {
+      content: "+";
+      position: absolute;
+      right: 16px;
+      top: 50%;
+      transform: translateY(-50%);
+      font-size: 24px;
+      line-height: 1;
+      color: var(--text-dark);
+      opacity: 0.8;
+    }
+
+    details[open] summary::after {
+      content: "–";
+    }
+
+    .panel {
+      padding: 0 16px 16px;
+      color: var(--text-soft);
+      font-size: 14px;
+      line-height: 1.7;
+    }
+
+    .panel p {
+      margin: 0 0 12px;
+    }
+
+    .panel p:last-child {
+      margin-bottom: 0;
+    }
+
+    .panel ul {
+      margin: 0 0 12px 18px;
+      padding: 0;
+    }
+
+    .panel li {
+      margin-bottom: 8px;
+    }
+
+    .faq-intro {
+      margin-bottom: 10px;
+    }
+
+    .footer-card {
+      margin-top: 14px;
+      background: rgba(62,68,66,0.95);
+      color: white;
+      border-radius: 12px;
+      padding: 18px 16px;
+      text-align: center;
+      box-shadow: var(--shadow-soft);
+    }
+
+    .footer-card h2 {
+      margin: 0 0 8px;
+      font-size: 18px;
+    }
+
+    .footer-card p {
+      margin: 0 0 12px;
+      color: rgba(255,255,255,0.88);
+      font-size: 14px;
+      line-height: 1.6;
+    }
+
+    .footer-card .mini-links {
+      display: grid;
+      gap: 8px;
+    }
+
+    .footer-card a {
+      color: white;
+      text-decoration: none;
+      font-weight: 700;
+    }
+
+    .sticky-cta {
+      position: fixed;
+      left: 0;
+      right: 0;
+      bottom: 0;
+      z-index: 999;
+      padding: 10px 10px calc(10px + env(safe-area-inset-bottom));
+      background: linear-gradient(to top, rgba(159,109,103,0.98), rgba(159,109,103,0.88));
+      backdrop-filter: blur(8px);
+      -webkit-backdrop-filter: blur(8px);
+      border-top: 1px solid rgba(255,255,255,0.18);
+    }
+
+    .sticky-cta-inner {
+      max-width: var(--max-width);
+      margin: 0 auto;
+      display: grid;
+      grid-template-columns: 1.2fr 1fr 1fr;
+      gap: 8px;
+    }
+
+    .sticky-btn {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      min-height: 46px;
+      text-decoration: none;
+      border-radius: 10px;
+      font-size: 12px;
+      font-weight: 700;
+      text-align: center;
+      line-height: 1.2;
+      padding: 8px;
+      box-shadow: 0 3px 10px rgba(0,0,0,0.10);
+    }
+
+    .sticky-btn.request { background: var(--btn-request); color: var(--text-dark); }
+    .sticky-btn.touchup { background: var(--btn-touchup); color: var(--text-dark); }
+    .sticky-btn.email { background: var(--btn-email); color: white; }
+
+    @media (min-width: 768px) {
+      body {
+        padding: 28px 18px 120px;
+      }
+
+      .name-pill {
+        font-size: 32px;
+      }
+
+      .intro-card {
+        padding: 22px 22px;
+      }
+
+      .intro-card h1 {
+        font-size: 28px;
+      }
+
+      .cta-stack {
+        grid-template-columns: 1fr 1fr 1fr;
+      }
+
+      .btn {
+        font-size: 15px;
+      }
+    }
+
+    @media (max-width: 520px) {
+      .name-pill {
+        font-size: 22px;
+        width: 100%;
+      }
+
+      .sticky-cta-inner {
+        grid-template-columns: 1fr 1fr 1fr;
+      }
+
+      .sticky-btn {
+        font-size: 11px;
+        min-height: 48px;
+      }
+    }
+  </style>
 </head>
-
 <body>
-
-<div class="wrap">
-
-<div class="card">
-
-<div class="hero">
-
-<div class="badge">Soul Fire Tattoo Studio</div>
-
-<h1>Tattoo Policies & FAQ</h1>
-
-<p class="sub">
-Please review these policies before submitting a tattoo request.  
-Booking an appointment indicates that you understand and agree to the policies outlined below.
-</p>
-
-<div class="notice">
-These policies allow us to respect both our clients and our artists’ time while maintaining a smooth booking process.  
-If you have any questions about these policies, please ask your artist before sending your deposit.
-</div>
-
-</div>
-
-<div class="section">
-
-<!-- DEPOSIT POLICY -->
-
-<div class="policy">
-
-<h2>Deposit Policy</h2>
-
-<p>
-A <strong>minimum $100 deposit</strong> is required to secure all tattoo appointments.
-Deposits are applied toward the final cost of your tattoo at your last session.
-</p>
-
-<ul>
-
-<li>Deposits are <strong>non-refundable and non-transferable</strong>.</li>
-
-<li>Your appointment is not secured until the deposit has been received.</li>
-
-<li>The deposit will be deducted from the final price of your tattoo.</li>
-
-</ul>
-
-<p>Your deposit may be forfeited in the following situations:</p>
-
-<ul>
-
-<li>You cancel your appointment.</li>
-
-<li>You do not show up for your appointment.</li>
-
-<li>You reschedule with less than the notice required by your artist (typically 72 hours – 1 week).</li>
-
-<li>You reschedule more than once.</li>
-
-<li>You arrive more than <strong>15 minutes late</strong> to your appointment.</li>
-
-<li>You arrive unfit to be tattooed.</li>
-
-<li>You significantly change the tattoo concept originally booked.</li>
-
-</ul>
-
-<p>
-If you no-show a consultation appointment, <strong>half of your deposit will be forfeited.</strong>
-</p>
-
-</div>
-
-
-<!-- TOUCH UP -->
-
-<div class="policy">
-
-<h2>Touch-Up Policy</h2>
-
-<p>
-One complimentary touch-up may be provided if necessary for minor healing inconsistencies.
-</p>
-
-<ul>
-
-<li>Touch-ups must be scheduled within <strong>6 months</strong> of the original tattoo appointment.</li>
-
-<li>Aftercare instructions must have been followed.</li>
-
-<li>Touch-ups are intended for <strong>small healed areas only</strong>, not redesigns or changes.</li>
-
-</ul>
-
-<p>
-<strong>Important:</strong> Tattoos on the hands, fingers, and feet heal unpredictably due to skin regeneration.
-These tattoos are <strong>not guaranteed</strong> and do not include a free touch-up.
-</p>
-
-<ul>
-
-<li>Touch-ups for these areas or tattoos older than 6 months are subject to a <strong>$50 touch-up fee</strong>.</li>
-
-<li>If you no-show your touch-up appointment, the complimentary touch-up will be forfeited.</li>
-
-</ul>
-
-</div>
-
-
-<!-- STUDIO POLICY -->
-
-<div class="policy">
-
-<h2>Studio Policy</h2>
-
-<ul>
-
-<li>Respectful behavior toward all staff and clients is expected at all times.</li>
-
-<li>Anyone under the influence of drugs or alcohol will not be tattooed.</li>
-
-<li>Children are not permitted inside the studio.</li>
-
-<li>Guests may attend appointments if approved by your artist and if they remain respectful and unobtrusive.</li>
-
-<li>All staff reserve the right to refuse service if necessary, even after a session has begun.</li>
-
-</ul>
-
-</div>
-
-
-<!-- CONSULT -->
-
-<div class="policy">
-
-<h2>Consultation Policy</h2>
-
-<p>
-Consultations are offered when needed for larger or more complex tattoo projects.
-</p>
-
-<ul>
-
-<li>Consultations may be done in person or virtually depending on the project.</li>
-
-<li>Please bring reference images, placement ideas, and sizing information when possible.</li>
-
-<li>If you no-show your consultation appointment, half of your deposit will be forfeited.</li>
-
-</ul>
-
-</div>
-
-
-<!-- BILLING -->
-
-<div class="policy">
-
-<h2>Billing Policy</h2>
-
-<p>
-Tattoo services are billed at the artist’s current hourly rate unless a flat price has been agreed upon.
-</p>
-
-<ul>
-
-<li>Billing begins once the tattoo session has started.</li>
-
-<li>If you arrive late, that time may be included in the billable session time.</li>
-
-<li>Pricing varies based on size, placement, detail, and complexity.</li>
-
-</ul>
-
-</div>
-
-
-<!-- FAQ -->
-
-<div class="policy">
-
-<h2>Frequently Asked Questions</h2>
-
-<ul>
-
-<li>
-<strong>When will I see my tattoo design?</strong><br>
-Most designs are finalized close to the appointment date.  
-This allows the artist to focus on the artwork and ensures we can make any final adjustments together during your session.
-</li>
-
-<br>
-
-<li>
-<strong>How do I book an appointment?</strong><br>
-Appointments are requested through the booking form.  
-Once your request is reviewed, you will be contacted with scheduling options.
-</li>
-
-<br>
-
-<li>
-<strong>Is a deposit required?</strong><br>
-Yes. A $100 non-refundable deposit is required to secure your appointment.
-</li>
-
-<br>
-
-<li>
-<strong>How much will my tattoo cost?</strong><br>
-Pricing depends on size, placement, detail, and time required.  
-An estimate will be provided after your booking request is reviewed.
-</li>
-
-<br>
-
-<li>
-<strong>What should I do before my appointment?</strong><br>
-
-• Eat a good meal beforehand  
-• Stay hydrated  
-• Get a good night's sleep  
-• Avoid alcohol or drugs before your appointment  
-• Wear comfortable clothing that allows access to the tattoo area
-
-</li>
-
-<br>
-
-<li>
-<strong>What should I bring?</strong><br>
-
-• Valid government-issued ID  
-• Snacks or drinks for longer sessions  
-• Comfortable clothing appropriate for the tattoo placement
-
-</li>
-
-<br>
-
-<li>
-<strong>What happens if I arrive late?</strong><br>
-If you arrive more than <strong>15 minutes late</strong>, your appointment may need to be rescheduled and your deposit may be forfeited.
-</li>
-
-<br>
-
-<li>
-<strong>Who should not get tattooed?</strong><br>
-You may be unable to receive a tattoo if you arrive intoxicated, without valid ID, pregnant, or with damaged skin such as sunburn, cuts, or bruising.
-</li>
-
-<br>
-
-<li>
-<strong>Do you copy other artists’ tattoos?</strong><br>
-No. The artist creates original designs but can use reference images as inspiration.
-</li>
-
-<br>
-
-<li>
-<strong>Do you accept walk-ins?</strong><br>
-Most tattoos are done by appointment so proper time can be dedicated to each piece.
-</li>
-
-<br>
-
-<li>
-<strong>How do I care for my tattoo after the session?</strong><br>
-Detailed aftercare instructions will be provided after your appointment to ensure proper healing.
-</li>
-
-</ul>
-
-</div>
-
-<a class="button" href="index.html">Back to Main Page</a>
-
-</div>
-
-<div class="footer">
-Taylor Helman Tattoo • Soul Fire Tattoo Studio
-</div>
-
-</div>
-
-</div>
-
+  <div class="wrap">
+
+    <div class="hero">
+      <div class="name-pill">Taylor Helman Tattoo</div>
+    </div>
+
+    <div class="intro-card">
+      <h1>Tattoo Policies & FAQ</h1>
+      <p>
+        Please review these policies before submitting a tattoo request. Booking with Taylor indicates that you understand and agree to the policies below. These guidelines help keep the process clear, fair, and respectful for both clients and artist time.
+      </p>
+    </div>
+
+    <div class="cta-card">
+      <div class="cta-stack">
+        <a class="btn btn-request" href="https://inkde.sk/taylorhelmantattoo">Start Tattoo Request</a>
+        <a class="btn btn-touchup" href="https://inkde.sk/taylorhelmantattoo/touch-up">Book Touch-Up Evaluation</a>
+        <a class="btn btn-email" href="index.html">Save Taylor’s Email</a>
+      </div>
+      <div class="helper">
+        If you do not hear back within 48 hours, please check your spam or junk folder.
+      </div>
+    </div>
+
+    <div class="content-card">
+      <div class="section-label">Before You Book</div>
+
+      <div class="accordion">
+
+        <details open>
+          <summary>Deposit Policy</summary>
+          <div class="panel">
+            <p>
+              A <strong>$100 deposit</strong> is required to secure a tattoo appointment. Deposits are applied toward the final cost of your tattoo at your last session.
+            </p>
+            <ul>
+              <li>Deposits are <strong>non-refundable and non-transferable</strong>.</li>
+              <li>Your appointment is not secured until the deposit has been received.</li>
+              <li>The deposit will be deducted from the final price of your tattoo unless otherwise discussed.</li>
+            </ul>
+            <p>Your deposit may be forfeited if:</p>
+            <ul>
+              <li>You cancel your appointment.</li>
+              <li>You do not show up for your appointment.</li>
+              <li>You reschedule with less than the notice required by your artist, typically 72 hours to 1 week.</li>
+              <li>You reschedule more than once.</li>
+              <li>You arrive more than <strong>15 minutes late</strong>.</li>
+              <li>You arrive unfit to be tattooed.</li>
+              <li>You completely change the tattoo concept originally booked.</li>
+            </ul>
+            <p>
+              If you no-show a consultation, <strong>half of your deposit will be forfeited</strong>.
+            </p>
+          </div>
+        </details>
+
+        <details>
+          <summary>Touch-Up Policy</summary>
+          <div class="panel">
+            <p>
+              One complimentary touch-up may be offered if needed for a minor healing inconsistency and aftercare instructions were followed.
+            </p>
+            <ul>
+              <li>Touch-ups must be scheduled within <strong>6 months</strong> of the original tattoo date.</li>
+              <li>Touch-ups are for small healed areas only, not redesigns, additions, or major changes.</li>
+              <li>Photos of the healed tattoo may be requested before approval.</li>
+            </ul>
+            <p>
+              Tattoos on the <strong>hands, fingers, and feet</strong> heal unpredictably and are not guaranteed. These areas do not include a free touch-up.
+            </p>
+            <ul>
+              <li>Touch-ups for hands, fingers, feet, or tattoos older than 6 months are subject to a <strong>$50 fee</strong>.</li>
+              <li>If you no-show your touch-up appointment, the complimentary touch-up is forfeited.</li>
+            </ul>
+          </div>
+        </details>
+
+        <details>
+          <summary>Studio Policy</summary>
+          <div class="panel">
+            <ul>
+              <li>Respectful behavior toward all staff and clients is expected at all times.</li>
+              <li>Anyone under the influence of drugs or alcohol will not be tattooed.</li>
+              <li>Children are not permitted inside the studio.</li>
+              <li>Guests are allowed only with artist approval and must remain respectful and non-obstructive.</li>
+              <li>All staff reserve the right to refuse service when necessary, even after a session has begun.</li>
+            </ul>
+          </div>
+        </details>
+
+        <details>
+          <summary>Consultation Policy</summary>
+          <div class="panel">
+            <p>
+              Consultations are a free service scheduled as needed depending on the project.
+            </p>
+            <ul>
+              <li>Consultations may be in person or virtual, depending on the tattoo.</li>
+              <li>Please bring reference images, placement ideas, and sizing details when possible.</li>
+              <li>If you no-show your consultation appointment, half of your deposit will be forfeited.</li>
+            </ul>
+          </div>
+        </details>
+
+        <details>
+          <summary>Billing Policy</summary>
+          <div class="panel">
+            <p>
+              Tattoo services are billed at the artist’s current hourly rate unless a flat rate has been agreed upon in advance.
+            </p>
+            <ul>
+              <li>Billing begins once the tattoo session has started.</li>
+              <li>If you arrive late, that time may be included in the billable session time.</li>
+              <li>Final pricing depends on size, placement, detail, complexity, and any approved changes.</li>
+            </ul>
+          </div>
+        </details>
+
+        <details>
+          <summary>Frequently Asked Questions</summary>
+          <div class="panel">
+            <p class="faq-intro">
+              Here are the most common questions clients ask before booking:
+            </p>
+
+            <p><strong>When will I see my tattoo design?</strong><br>
+              Most designs are finalized close to the appointment date. This allows Taylor to dedicate focused time to the artwork and make any final refinements together with you at your session.
+            </p>
+
+            <p><strong>Where are you located?</strong><br>
+              Soul Fire Tattoo Studio<br>
+              227 Wharncliffe Road South<br>
+              London, Ontario, Canada
+            </p>
+
+            <p><strong>How do I book an appointment?</strong><br>
+              Appointments are requested through the booking form. Once your request is reviewed, Taylor will reach out with next steps or available scheduling options.
+            </p>
+
+            <p><strong>Is a deposit required?</strong><br>
+              Yes. A $100 non-refundable, non-transferable deposit is required to secure your appointment.
+            </p>
+
+            <p><strong>What is your cancellation or rescheduling policy?</strong><br>
+              Deposits may be forfeited if you cancel, no-show, reschedule too close to the appointment, reschedule more than once, arrive more than 15 minutes late, arrive unfit to be tattooed, or significantly change the tattoo idea you originally booked.
+            </p>
+
+            <p><strong>How much will my tattoo cost?</strong><br>
+              Pricing depends on size, placement, detail, and time required. After reviewing your booking request, Taylor will provide an estimate or hourly rate when appropriate.
+            </p>
+
+            <p><strong>Do you do consultations?</strong><br>
+              Yes. Some pieces may require a consultation to discuss design direction, size, placement, or logistics in more detail.
+            </p>
+
+            <p><strong>What should I do to prepare for my appointment?</strong><br>
+              Eat a good meal beforehand, stay hydrated, get a good night’s sleep, avoid alcohol or drugs, and wear comfortable clothing that gives access to the tattoo area.
+            </p>
+
+            <p><strong>What should I bring to my appointment?</strong><br>
+              Please bring valid government-issued ID and, for longer appointments, snacks or drinks if you’d like them.
+            </p>
+
+            <p><strong>What happens if I arrive late?</strong><br>
+              If you arrive more than <strong>15 minutes late</strong>, your appointment may need to be rescheduled and your deposit may be forfeited.
+            </p>
+
+            <p><strong>Who may be unable to get tattooed that day?</strong><br>
+              Taylor may be unable to proceed if you arrive intoxicated, without valid ID, pregnant, or with damaged skin such as sunburn, cuts, scrapes, or significant bruising.
+            </p>
+
+            <p><strong>Do you offer touch-ups?</strong><br>
+              Yes, when appropriate. Touch-ups are intended for rare healing inconsistencies and must follow the timeline in the touch-up policy above.
+            </p>
+
+            <p><strong>Do you tattoo other artists’ work?</strong><br>
+              Exact copies are not offered. Reference images are welcome for inspiration, and Taylor will create something original in her own style.
+            </p>
+
+            <p><strong>What style of tattoos do you specialize in?</strong><br>
+              Taylor specializes in fine-line micro realism, including florals, pet portraits, and repeatable flash.
+            </p>
+
+            <p><strong>Do you accept walk-ins?</strong><br>
+              Taylor works primarily by appointment so each project receives the time and attention it deserves.
+            </p>
+
+            <p><strong>How should I care for my tattoo after the appointment?</strong><br>
+              Detailed aftercare instructions will be provided after your session. Following them closely helps ensure the best possible healing result.
+            </p>
+          </div>
+        </details>
+
+      </div>
+    </div>
+
+    <div class="footer-card">
+      <h2>Ready to book?</h2>
+      <p>
+        Start with the booking form, request a touch-up evaluation, or save Taylor’s email so you do not miss an important reply.
+      </p>
+      <div class="mini-links">
+        <a href="https://inkde.sk/taylorhelmantattoo">Start Tattoo Request</a>
+        <a href="https://inkde.sk/taylorhelmantattoo/touch-up">Book Touch-Up Evaluation</a>
+        <a href="index.html">Save Taylor’s Email</a>
+      </div>
+    </div>
+
+  </div>
+
+  <div class="sticky-cta">
+    <div class="sticky-cta-inner">
+      <a class="sticky-btn request" href="https://inkde.sk/taylorhelmantattoo">Start Tattoo Request</a>
+      <a class="sticky-btn touchup" href="https://inkde.sk/taylorhelmantattoo/touch-up">Touch-Up</a>
+      <a class="sticky-btn email" href="index.html">Save Email</a>
+    </div>
+  </div>
 </body>
 </html>
