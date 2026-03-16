@@ -1,0 +1,771 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Availability | Taylor Helman Tattoo</title>
+  <style>
+    /* ── Design system — mirrors index.html exactly ─────────────────────────── */
+    :root {
+      --bg: #9f6d67;
+      --surface: rgba(255,255,255,0.20);
+      --surface-strong: rgba(255,255,255,0.26);
+      --surface-border: rgba(255,255,255,0.30);
+      --text-dark: #1f2937;
+      --text-soft: rgba(31,41,55,0.82);
+      --text-light: #ffffff;
+      --shadow-soft: 0 10px 30px rgba(0,0,0,0.14);
+
+      --btn-request: #eddecf;
+      --btn-request-hover: #e4d5c6;
+      --btn-touchup: #d1aa99;
+      --btn-touchup-hover: #c89f8d;
+      --btn-email: #7a867f;
+      --btn-email-hover: #707b75;
+      --btn-dark: #3e4442;
+      --btn-dark-hover: #343a38;
+
+      --radius-card: 14px;
+      --radius-pill: 10px;
+      --radius-button: 8px;
+      --max-width: 760px;
+    }
+
+    * { box-sizing: border-box; }
+    html { scroll-behavior: smooth; }
+
+    body {
+      margin: 0;
+      font-family: Arial, Helvetica, sans-serif;
+      background: var(--bg);
+      color: var(--text-dark);
+      min-height: 100vh;
+      padding: 20px 14px 110px;
+    }
+
+    .wrap {
+      width: 100%;
+      max-width: var(--max-width);
+      margin: 0 auto;
+    }
+
+    /* ── Shared card base ────────────────────────────────────────────────────── */
+    .card-base,
+    .intro-card,
+    .content-card,
+    .info-card,
+    .footer-card {
+      background: var(--surface);
+      border: 1px solid var(--surface-border);
+      border-radius: var(--radius-card);
+      box-shadow: var(--shadow-soft);
+      backdrop-filter: blur(6px);
+      -webkit-backdrop-filter: blur(6px);
+    }
+
+    /* ── Hero ────────────────────────────────────────────────────────────────── */
+    .hero {
+      text-align: center;
+      margin-bottom: 14px;
+    }
+
+    .name-pill {
+      display: inline-block;
+      background: var(--surface);
+      border: 1px solid var(--surface-border);
+      color: var(--text-dark);
+      padding: 12px 18px;
+      border-radius: var(--radius-pill);
+      font-weight: 700;
+      font-size: 28px;
+      line-height: 1.15;
+      box-shadow: var(--shadow-soft);
+      backdrop-filter: blur(6px);
+      -webkit-backdrop-filter: blur(6px);
+      text-decoration: none;
+    }
+
+    /* ── Intro card ──────────────────────────────────────────────────────────── */
+    .intro-card {
+      margin-top: 14px;
+      padding: 18px 16px;
+      text-align: center;
+    }
+
+    .intro-card h1 {
+      margin: 0 0 10px;
+      font-size: 24px;
+      line-height: 1.15;
+    }
+
+    .intro-card p {
+      margin: 0;
+      color: var(--text-soft);
+      font-size: 15px;
+      line-height: 1.65;
+    }
+
+    /* ── Content / info cards ────────────────────────────────────────────────── */
+    .content-card {
+      margin-top: 14px;
+      padding: 18px 16px;
+    }
+
+    .info-card {
+      margin-top: 14px;
+      padding: 16px;
+    }
+
+    /* ── Section label pill ──────────────────────────────────────────────────── */
+    .section-label {
+      display: inline-block;
+      margin-bottom: 12px;
+      background: var(--surface-strong);
+      border: 1px solid var(--surface-border);
+      border-radius: 999px;
+      padding: 8px 12px;
+      font-size: 12px;
+      font-weight: 700;
+      letter-spacing: 0.04em;
+      text-transform: uppercase;
+    }
+
+    /* ── Buttons ─────────────────────────────────────────────────────────────── */
+    .btn {
+      display: block;
+      width: 100%;
+      text-align: center;
+      text-decoration: none;
+      color: var(--text-dark);
+      font-weight: 700;
+      font-size: 15px;
+      line-height: 1.2;
+      padding: 16px 14px;
+      border-radius: var(--radius-button);
+      transition: transform 0.15s ease, background 0.15s ease;
+      box-shadow: 0 3px 10px rgba(0,0,0,0.08);
+    }
+
+    .btn:hover, .btn:focus-visible {
+      transform: translateY(-1px);
+      outline: none;
+    }
+
+    .btn-request { background: var(--btn-request); }
+    .btn-request:hover, .btn-request:focus-visible { background: var(--btn-request-hover); }
+
+    .btn-touchup { background: var(--btn-touchup); }
+    .btn-touchup:hover, .btn-touchup:focus-visible { background: var(--btn-touchup-hover); }
+
+    .btn-dark { background: var(--btn-dark); color: var(--text-light); }
+    .btn-dark:hover, .btn-dark:focus-visible { background: var(--btn-dark-hover); }
+
+    .btn-stack { display: grid; gap: 10px; }
+
+    /* ── Footer card ─────────────────────────────────────────────────────────── */
+    .footer-card {
+      margin-top: 14px;
+      padding: 18px 16px;
+      text-align: center;
+    }
+
+    .footer-card h2 { margin: 0 0 8px; font-size: 18px; }
+
+    .footer-card p {
+      margin: 0 0 14px;
+      color: var(--text-soft);
+      font-size: 14px;
+      line-height: 1.6;
+    }
+
+    .mini-links { display: grid; gap: 8px; margin-top: 14px; }
+
+    .mini-links a {
+      text-decoration: none;
+      font-weight: 700;
+      color: var(--text-dark);
+      font-size: 14px;
+    }
+
+    /* ── Sticky CTA bar ──────────────────────────────────────────────────────── */
+    .sticky-cta {
+      position: fixed;
+      left: 0; right: 0; bottom: 0;
+      z-index: 999;
+      padding: 10px 10px calc(10px + env(safe-area-inset-bottom));
+      background: linear-gradient(to top, rgba(159,109,103,0.98), rgba(159,109,103,0.88));
+      backdrop-filter: blur(8px);
+      -webkit-backdrop-filter: blur(8px);
+      border-top: 1px solid rgba(255,255,255,0.18);
+    }
+
+    .sticky-cta-inner {
+      max-width: var(--max-width);
+      margin: 0 auto;
+      display: grid;
+      grid-template-columns: 1.2fr 1fr 1fr 1fr;
+      gap: 8px;
+    }
+
+    .sticky-btn {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      min-height: 46px;
+      text-decoration: none;
+      border-radius: 10px;
+      font-size: 12px;
+      font-weight: 700;
+      text-align: center;
+      line-height: 1.2;
+      padding: 8px;
+      box-shadow: 0 3px 10px rgba(0,0,0,0.10);
+    }
+
+    .sticky-btn.request   { background: var(--btn-request); color: var(--text-dark); }
+    .sticky-btn.touchup   { background: var(--btn-touchup); color: var(--text-dark); }
+    .sticky-btn.home      { background: var(--btn-email);   color: white; }
+    .sticky-btn.portfolio { background: var(--btn-dark);    color: white; }
+
+    /* ── Instagram IAB banner ────────────────────────────────────────────────── */
+    .ig-banner {
+      display: none;
+      position: relative;
+      background: #1f2937;
+      color: #ffffff;
+      border-radius: var(--radius-card);
+      padding: 14px 40px 14px 16px;
+      margin-bottom: 14px;
+      font-size: 14px;
+      line-height: 1.6;
+    }
+
+    .ig-banner.visible { display: block; }
+
+    .ig-banner strong { display: block; margin-bottom: 4px; font-size: 15px; }
+
+    .ig-banner-close {
+      position: absolute;
+      top: 10px; right: 12px;
+      background: none; border: none;
+      color: #ffffff;
+      font-size: 20px; line-height: 1;
+      cursor: pointer; padding: 4px;
+    }
+
+    /* ── Availability status banner ──────────────────────────────────────────── */
+    .avail-status-row {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      margin-bottom: 6px;
+    }
+
+    .avail-status-dot {
+      width: 13px;
+      height: 13px;
+      border-radius: 50%;
+      flex-shrink: 0;
+    }
+
+    .avail-status-text {
+      font-size: 20px;
+      font-weight: 700;
+      line-height: 1.2;
+    }
+
+    .avail-status-label {
+      font-size: 15px;
+      color: var(--text-soft);
+      line-height: 1.55;
+      margin: 4px 0 10px;
+    }
+
+    .avail-next {
+      font-size: 13px;
+      font-weight: 700;
+      color: var(--text-soft);
+      margin-bottom: 14px;
+    }
+
+    /* Status dot colour tokens */
+    .dot-open    { background: var(--btn-request); }
+    .dot-limited { background: var(--btn-touchup); }
+    .dot-closed  { background: rgba(31,41,55,0.30); }
+    .dot-unknown { background: rgba(31,41,55,0.18); }
+
+    /* ── Week section ────────────────────────────────────────────────────────── */
+    .week-header {
+      display: inline-block;
+      margin-bottom: 10px;
+      background: var(--surface-strong);
+      border: 1px solid var(--surface-border);
+      border-radius: 999px;
+      padding: 6px 12px;
+      font-size: 12px;
+      font-weight: 700;
+      letter-spacing: 0.04em;
+      text-transform: uppercase;
+    }
+
+    /* ── Day rows ────────────────────────────────────────────────────────────── */
+    .day-row {
+      display: flex;
+      align-items: flex-start;
+      justify-content: space-between;
+      gap: 12px;
+      padding: 13px 0;
+      border-bottom: 1px solid rgba(255,255,255,0.14);
+      min-height: 44px; /* accessible tap target height */
+    }
+
+    .day-row:last-child {
+      border-bottom: none;
+      padding-bottom: 0;
+    }
+
+    .day-info { flex: 1; min-width: 0; }
+
+    .day-name {
+      font-size: 15px;
+      font-weight: 700;
+      line-height: 1.2;
+    }
+
+    .day-short-date {
+      font-size: 13px;
+      color: var(--text-soft);
+      margin-top: 2px;
+    }
+
+    .day-right {
+      display: flex;
+      flex-direction: column;
+      align-items: flex-end;
+      gap: 6px;
+      flex-shrink: 0;
+      padding-top: 1px;
+    }
+
+    /* ── Day status badge ────────────────────────────────────────────────────── */
+    .day-badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      font-size: 13px;
+      font-weight: 700;
+      line-height: 1.2;
+    }
+
+    .day-badge-dot {
+      width: 8px;
+      height: 8px;
+      border-radius: 50%;
+      flex-shrink: 0;
+    }
+
+    .badge-available .day-badge-dot  { background: var(--btn-request); }
+    .badge-limited   .day-badge-dot  { background: var(--btn-touchup); }
+    .badge-flash-day .day-badge-dot  { background: var(--btn-request); }
+    .badge-booked    { color: var(--text-soft); font-weight: 400; }
+    .badge-closed    { color: rgba(31,41,55,0.38); font-weight: 400; }
+    .badge-travel    { color: var(--text-soft); font-style: italic; font-weight: 400; }
+    .badge-convention { color: var(--text-soft); font-style: italic; font-weight: 400; }
+
+    /* ── Window tags ─────────────────────────────────────────────────────────── */
+    .day-windows {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 5px;
+      justify-content: flex-end;
+    }
+
+    .window-tag {
+      background: var(--surface-strong);
+      border: 1px solid var(--surface-border);
+      border-radius: 999px;
+      padding: 3px 10px;
+      font-size: 11px;
+      font-weight: 700;
+      color: var(--text-dark);
+    }
+
+    /* ── Disclaimer card ─────────────────────────────────────────────────────── */
+    .disclaimer-card p {
+      margin: 0;
+      font-size: 13px;
+      color: var(--text-soft);
+      line-height: 1.75;
+    }
+
+    /* ── Loading skeleton ────────────────────────────────────────────────────── */
+    @keyframes shimmer {
+      0%   { background-position: -700px 0; }
+      100% { background-position:  700px 0; }
+    }
+
+    .skel {
+      background: linear-gradient(
+        90deg,
+        rgba(255,255,255,0.09) 25%,
+        rgba(255,255,255,0.24) 50%,
+        rgba(255,255,255,0.09) 75%
+      );
+      background-size: 1400px 100%;
+      animation: shimmer 1.6s infinite;
+      border-radius: 8px;
+    }
+
+    .skel-line      { height: 14px; }
+    .skel-title     { height: 20px; width: 55%; margin-bottom: 10px; }
+    .skel-sub       { height: 14px; width: 80%; margin-bottom: 14px; }
+    .skel-btn       { height: 52px; border-radius: var(--radius-button); margin-top: 4px; }
+    .skel-pill      { height: 13px; width: 38%; border-radius: 999px; margin-bottom: 12px; }
+    .skel-row-left  { height: 14px; width: 42%; }
+    .skel-row-right { height: 14px; width: 26%; }
+
+    .skel-day-row {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 13px 0;
+      border-bottom: 1px solid rgba(255,255,255,0.14);
+    }
+
+    .skel-day-row:last-child { border-bottom: none; }
+
+    /* ── Responsive ──────────────────────────────────────────────────────────── */
+    @media (min-width: 768px) {
+      body { padding: 28px 18px 120px; }
+      .name-pill { font-size: 32px; }
+      .intro-card h1 { font-size: 28px; }
+      .intro-card { padding: 22px; }
+      .avail-status-text { font-size: 22px; }
+    }
+
+    @media (max-width: 520px) {
+      .name-pill {
+        font-size: 22px;
+        width: 100%;
+      }
+      .sticky-cta-inner { grid-template-columns: 1fr 1fr 1fr 1fr; }
+      .sticky-btn { font-size: 11px; min-height: 48px; }
+    }
+  </style>
+</head>
+<body>
+  <div class="wrap">
+
+    <!-- Instagram in-app browser warning -->
+    <div class="ig-banner" id="igBanner">
+      <button class="ig-banner-close" onclick="dismissIgBanner()" aria-label="Dismiss">&#x2715;</button>
+      <strong>You&rsquo;re browsing inside Instagram</strong>
+      <span id="igBannerMsg">For best results, tap <strong>&hellip;</strong> at the top-right and choose <strong>&ldquo;Open in Safari&rdquo;</strong>.</span>
+    </div>
+
+    <!-- Hero -->
+    <div class="hero">
+      <a class="name-pill" href="index.html">Taylor Helman Tattoo</a>
+    </div>
+
+    <!-- Page intro -->
+    <div class="intro-card">
+      <h1>Current Availability</h1>
+      <p>Wednesday &ndash; Saturday &nbsp;&middot;&nbsp; 11&nbsp;AM &ndash; 7&nbsp;PM Eastern Time &nbsp;&middot;&nbsp; Updated every 15&nbsp;minutes</p>
+    </div>
+
+    <!-- ── Status banner (all states) ──────────────────────────────────────── -->
+    <div class="content-card" id="statusBanner" style="padding:20px 18px;">
+
+      <!-- Loading -->
+      <div id="stateLoading">
+        <div class="skel skel-title"></div>
+        <div class="skel skel-sub"></div>
+        <div class="skel skel-btn"></div>
+      </div>
+
+      <!-- Loaded -->
+      <div id="stateLoaded" style="display:none;">
+        <div class="avail-status-row">
+          <span class="avail-status-dot" id="statusDot"></span>
+          <span class="avail-status-text" id="statusText"></span>
+        </div>
+        <div class="avail-status-label" id="statusLabelEl"></div>
+        <div class="avail-next" id="statusNext" style="display:none;"></div>
+        <a class="btn btn-request" href="https://inkde.sk/taylorhelmantattoo/book/018f9c9c-d2b6-50dc-5765-f9b922db88c8">Start Tattoo Request</a>
+      </div>
+
+      <!-- Fallback -->
+      <div id="stateFallback" style="display:none;">
+        <div class="avail-status-row">
+          <span class="avail-status-dot dot-unknown"></span>
+          <span class="avail-status-text">Availability Unavailable</span>
+        </div>
+        <div class="avail-status-label" style="margin-bottom:14px;">
+          Live availability is temporarily unavailable. Submit a request and Taylor will confirm dates during manual review.
+        </div>
+        <a class="btn btn-request" href="https://inkde.sk/taylorhelmantattoo/book/018f9c9c-d2b6-50dc-5765-f9b922db88c8">Start Tattoo Request</a>
+      </div>
+
+      <!-- Error -->
+      <div id="stateError" style="display:none;">
+        <div class="avail-status-row">
+          <span class="avail-status-dot dot-unknown"></span>
+          <span class="avail-status-text">Unable to Load</span>
+        </div>
+        <div class="avail-status-label" style="margin-bottom:14px;">
+          Check your connection and refresh, or submit a request and Taylor will confirm availability during review.
+        </div>
+        <a class="btn btn-request" href="https://inkde.sk/taylorhelmantattoo/book/018f9c9c-d2b6-50dc-5765-f9b922db88c8">Start Tattoo Request</a>
+      </div>
+
+    </div>
+    <!-- /status banner -->
+
+    <!-- ── Week availability cards ──────────────────────────────────────────── -->
+    <div id="weeksRegion">
+
+      <!-- Skeleton (two weeks) -->
+      <div id="weeksSkeleton">
+        <div class="content-card" style="margin-top:14px; padding:16px;">
+          <div class="skel skel-pill"></div>
+          <div class="skel-day-row"><div class="skel skel-line skel-row-left"></div><div class="skel skel-line skel-row-right"></div></div>
+          <div class="skel-day-row"><div class="skel skel-line skel-row-left"></div><div class="skel skel-line skel-row-right"></div></div>
+          <div class="skel-day-row"><div class="skel skel-line skel-row-left"></div><div class="skel skel-line skel-row-right"></div></div>
+          <div class="skel-day-row" style="border-bottom:none;"><div class="skel skel-line skel-row-left"></div><div class="skel skel-line skel-row-right"></div></div>
+        </div>
+        <div class="content-card" style="margin-top:14px; padding:16px;">
+          <div class="skel skel-pill"></div>
+          <div class="skel-day-row"><div class="skel skel-line skel-row-left"></div><div class="skel skel-line skel-row-right"></div></div>
+          <div class="skel-day-row"><div class="skel skel-line skel-row-left"></div><div class="skel skel-line skel-row-right"></div></div>
+          <div class="skel-day-row"><div class="skel skel-line skel-row-left"></div><div class="skel skel-line skel-row-right"></div></div>
+          <div class="skel-day-row" style="border-bottom:none;"><div class="skel skel-line skel-row-left"></div><div class="skel skel-line skel-row-right"></div></div>
+        </div>
+      </div>
+
+      <!-- Live week cards injected here by JS -->
+      <div id="weeksLive"></div>
+
+    </div>
+    <!-- /weeks region -->
+
+    <!-- Disclaimer (shown after load) -->
+    <div class="content-card disclaimer-card" id="disclaimerCard" style="display:none; padding:16px;">
+      <div class="section-label">Please Note</div>
+      <p id="disclaimerText"></p>
+    </div>
+
+    <!-- Footer CTA (shown after load) -->
+    <div class="footer-card" id="footerCard" style="display:none;">
+      <h2>Ready to submit a request?</h2>
+      <p>Submit your tattoo request and Taylor will confirm availability and next steps manually.</p>
+      <div class="btn-stack">
+        <a class="btn btn-request" href="https://inkde.sk/taylorhelmantattoo/book/018f9c9c-d2b6-50dc-5765-f9b922db88c8">Start Tattoo Request</a>
+        <a class="btn btn-touchup" href="https://inkde.sk/taylorhelmantattoo/book/018fa78c-7cac-733b-7204-d86cf7051d08">Book Touch-Up Evaluation</a>
+      </div>
+      <div class="mini-links">
+        <a href="policies.html">Read Policies &amp; FAQ</a>
+        <a href="portfolio.html">View My Work</a>
+        <a href="index.html">Back to Home</a>
+      </div>
+    </div>
+
+  </div><!-- /.wrap -->
+
+  <!-- Sticky CTA bar -->
+  <div class="sticky-cta">
+    <div class="sticky-cta-inner">
+      <a class="sticky-btn request"   href="https://inkde.sk/taylorhelmantattoo/book/018f9c9c-d2b6-50dc-5765-f9b922db88c8">Start Request</a>
+      <a class="sticky-btn touchup"   href="https://inkde.sk/taylorhelmantattoo/book/018fa78c-7cac-733b-7204-d86cf7051d08">Touch-Up</a>
+      <a class="sticky-btn home"      href="index.html">Home</a>
+      <a class="sticky-btn portfolio" href="portfolio.html">My Work</a>
+    </div>
+  </div>
+
+  <script>
+    // ── Config ────────────────────────────────────────────────────────────────
+    var WORKER_URL = 'https://taylorhelmantattoo-availability.taylorhelmantattoo.workers.dev/api/availability';
+
+    // Top-level status → dot CSS class + display text
+    var BANNER_STATUS = {
+      open:    { dotClass: 'dot-open',    text: 'Booking Open'           },
+      limited: { dotClass: 'dot-limited', text: 'Limited Availability'   },
+      closed:  { dotClass: 'dot-closed',  text: 'Books Currently Closed' },
+      unknown: { dotClass: 'dot-unknown', text: 'Status Unavailable'     },
+    };
+
+    // Per-day status → badge class, dot shown, display text
+    var DAY_STATUS = {
+      available:   { badge: 'badge-available',   dot: true,  text: 'Available'    },
+      limited:     { badge: 'badge-limited',     dot: true,  text: 'Limited'      },
+      booked:      { badge: 'badge-booked',      dot: false, text: 'Fully Booked' },
+      closed:      { badge: 'badge-closed',      dot: false, text: '\u2014'       },
+      'flash-day': { badge: 'badge-flash-day',   dot: true,  text: 'Flash Day',   prefix: '\u2736\u00a0' },
+      travel:      { badge: 'badge-travel',      dot: false, text: 'Travel',      prefix: '\u2708\u00a0' },
+      convention:  { badge: 'badge-convention',  dot: false, text: 'Convention',  prefix: '\u2605\u00a0' },
+    };
+
+    // ── Instagram IAB detection ───────────────────────────────────────────────
+    (function () {
+      var ua = navigator.userAgent || '';
+      if (ua.indexOf('Instagram') === -1) return;
+      var banner  = document.getElementById('igBanner');
+      var msgEl   = document.getElementById('igBannerMsg');
+      if (/android/i.test(ua)) {
+        msgEl.innerHTML = 'For best results, tap <strong>&hellip;</strong> at the top-right and choose <strong>&ldquo;Open in Chrome&rdquo;</strong>.';
+      }
+      banner.classList.add('visible');
+    })();
+
+    function dismissIgBanner() {
+      document.getElementById('igBanner').style.display = 'none';
+    }
+
+    // ── HTML escaping ─────────────────────────────────────────────────────────
+    function esc(s) {
+      return String(s == null ? '' : s)
+        .replace(/&/g, '&amp;')
+        .replace(/</g, '&lt;')
+        .replace(/>/g, '&gt;')
+        .replace(/"/g, '&quot;');
+    }
+
+    // ── Render helpers ────────────────────────────────────────────────────────
+
+    function renderWindowTags(windows) {
+      if (!windows || !windows.length) return '';
+      return '<div class="day-windows">'
+        + windows.map(function (w) {
+            return '<span class="window-tag">' + esc(w) + '</span>';
+          }).join('')
+        + '</div>';
+    }
+
+    function renderDayBadge(day) {
+      var sc       = DAY_STATUS[day.status] || DAY_STATUS['closed'];
+      var prefix   = sc.prefix || '';
+      // A custom label (Flash Day, Travel, Convention text from config) overrides the default
+      var labelTxt = day.label ? esc(day.label) : esc(sc.text);
+      var dotHtml  = sc.dot ? '<span class="day-badge-dot"></span>' : '';
+
+      return '<div class="day-badge ' + esc(sc.badge) + '">'
+        + dotHtml
+        + '<span>' + esc(prefix) + labelTxt + '</span>'
+        + '</div>';
+    }
+
+    function renderDayRow(day) {
+      return '<div class="day-row">'
+        + '<div class="day-info">'
+        +   '<div class="day-name">'       + esc(day.dayName)   + '</div>'
+        +   '<div class="day-short-date">' + esc(day.shortDate) + '</div>'
+        + '</div>'
+        + '<div class="day-right">'
+        +   renderDayBadge(day)
+        +   renderWindowTags(day.windows)
+        + '</div>'
+        + '</div>';
+    }
+
+    function renderWeekCard(week) {
+      return '<div class="content-card" style="margin-top:14px; padding:16px;" '
+        + 'role="region" aria-label="' + esc(week.weekLabel) + '">'
+        + '<div class="week-header">' + esc(week.weekLabel) + '</div>'
+        + week.days.map(renderDayRow).join('')
+        + '</div>';
+    }
+
+    // ── State transitions ─────────────────────────────────────────────────────
+
+    function hideLoading() {
+      document.getElementById('stateLoading').style.display  = 'none';
+      document.getElementById('weeksSkeleton').style.display = 'none';
+    }
+
+    function showDisclaimer(text) {
+      if (!text) return;
+      document.getElementById('disclaimerText').textContent = text;
+      document.getElementById('disclaimerCard').style.display = 'block';
+    }
+
+    function showFooter() {
+      document.getElementById('footerCard').style.display = 'block';
+    }
+
+    // ── Loaded state ──────────────────────────────────────────────────────────
+
+    function renderLoaded(data) {
+      hideLoading();
+
+      // Status banner
+      var sc = BANNER_STATUS[data.status] || BANNER_STATUS.unknown;
+
+      document.getElementById('statusDot').className  = 'avail-status-dot ' + sc.dotClass;
+      document.getElementById('statusText').textContent = sc.text;
+      document.getElementById('statusLabelEl').textContent = data.statusLabel || '';
+
+      var nextEl = document.getElementById('statusNext');
+      if (data.nextAvailableLabel && data.status !== 'closed') {
+        nextEl.textContent = 'Next opening: ' + data.nextAvailableLabel;
+        nextEl.style.display = 'block';
+      } else {
+        nextEl.style.display = 'none';
+      }
+
+      document.getElementById('stateLoaded').style.display = 'block';
+
+      // Week cards
+      var liveEl = document.getElementById('weeksLive');
+      if (data.weeks && data.weeks.length > 0) {
+        liveEl.innerHTML = data.weeks.map(renderWeekCard).join('');
+      } else {
+        liveEl.innerHTML = '<div class="content-card" style="margin-top:14px; padding:18px 16px; '
+          + 'text-align:center; color:var(--text-soft); font-size:14px;">'
+          + 'No upcoming openings in the next 60 days. Submit a request to be added to the waitlist.'
+          + '</div>';
+      }
+
+      showDisclaimer(data.disclaimer);
+      showFooter();
+    }
+
+    // ── Fallback state ────────────────────────────────────────────────────────
+
+    function renderFallback(data) {
+      hideLoading();
+      document.getElementById('stateFallback').style.display = 'block';
+      document.getElementById('weeksSkeleton').style.display = 'none';
+      showDisclaimer(data && data.disclaimer);
+      showFooter();
+    }
+
+    // ── Error state ───────────────────────────────────────────────────────────
+
+    function renderError() {
+      hideLoading();
+      document.getElementById('stateError').style.display    = 'block';
+      document.getElementById('weeksSkeleton').style.display = 'none';
+      showFooter();
+    }
+
+    // ── Fetch ─────────────────────────────────────────────────────────────────
+
+    fetch(WORKER_URL, { method: 'GET', headers: { Accept: 'application/json' } })
+      .then(function (res) {
+        if (!res.ok) throw new Error('HTTP ' + res.status);
+        return res.json();
+      })
+      .then(function (data) {
+        if (data && data.fallback) {
+          renderFallback(data);
+        } else {
+          renderLoaded(data);
+        }
+      })
+      .catch(function (err) {
+        console.warn('[availability] fetch failed:', err.message);
+        renderError();
+      });
+  </script>
+</body>
+</html>
