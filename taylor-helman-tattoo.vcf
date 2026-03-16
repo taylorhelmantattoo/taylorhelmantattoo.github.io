@@ -1,6 +1,8 @@
 BEGIN:VCARD
 VERSION:3.0
 FN:Taylor Helman
+N:Helman;Taylor;;;
 ORG:Soul Fire Tattoo Studio
-EMAIL:taylorhelmantattoo@inkde.sk
+TITLE:Tattoo Artist
+EMAIL;TYPE=INTERNET:taylorhelmantattoo@inkde.sk
 END:VCARD
