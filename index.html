@@ -3,381 +3,510 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Add Taylor Helman to Your Contacts</title>
+  <title>Save Taylor’s Email | Taylor Helman Tattoo</title>
   <style>
     :root {
-      --bg: #111111;
-      --card: #1b1b1b;
-      --card-2: #242424;
-      --text: #f5f5f5;
-      --muted: #c9c9c9;
-      --accent: #d6a24a;
-      --accent-2: #f0c36d;
-      --border: rgba(255,255,255,0.08);
-      --shadow: 0 18px 50px rgba(0,0,0,0.35);
-      --radius: 22px;
-      --warning-bg: rgba(240, 195, 109, 0.12);
-      --warning-border: rgba(240, 195, 109, 0.35);
+      --bg: #9f6d67;
+      --surface: rgba(255,255,255,0.20);
+      --surface-strong: rgba(255,255,255,0.26);
+      --surface-border: rgba(255,255,255,0.30);
+      --text-dark: #1f2937;
+      --text-soft: rgba(31,41,55,0.82);
+      --text-light: #ffffff;
+      --shadow-soft: 0 10px 30px rgba(0,0,0,0.14);
+
+      --btn-request: #eddecf;
+      --btn-request-hover: #e4d5c6;
+
+      --btn-touchup: #d1aa99;
+      --btn-touchup-hover: #c89f8d;
+
+      --btn-email: #7a867f;
+      --btn-email-hover: #707b75;
+
+      --btn-dark: #3e4442;
+      --btn-dark-hover: #343a38;
+
+      --radius-card: 14px;
+      --radius-pill: 10px;
+      --radius-button: 8px;
+      --radius-image: 16px;
+      --max-width: 760px;
     }
 
     * { box-sizing: border-box; }
 
+    html {
+      scroll-behavior: smooth;
+    }
+
     body {
       margin: 0;
-      font-family: Inter, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
-      background:
-        radial-gradient(circle at top, rgba(214, 162, 74, 0.16), transparent 28%),
-        linear-gradient(180deg, #0f0f10 0%, #151515 100%);
-      color: var(--text);
+      font-family: Arial, Helvetica, sans-serif;
+      background: var(--bg);
+      color: var(--text-dark);
       min-height: 100vh;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      padding: 24px;
+      padding: 20px 14px 110px;
     }
 
     .wrap {
       width: 100%;
-      max-width: 760px;
-    }
-
-    .card {
-      background: linear-gradient(180deg, rgba(255,255,255,0.03), rgba(255,255,255,0.015));
-      border: 1px solid var(--border);
-      border-radius: var(--radius);
-      box-shadow: var(--shadow);
-      overflow: hidden;
-      backdrop-filter: blur(10px);
+      max-width: var(--max-width);
+      margin: 0 auto;
     }
 
     .hero {
-      padding: 36px 28px 22px;
-      background: linear-gradient(180deg, rgba(214,162,74,0.16), rgba(214,162,74,0.02));
-      border-bottom: 1px solid var(--border);
+      text-align: center;
+      margin-bottom: 14px;
+    }
+
+    .name-pill {
+      display: inline-block;
+      background: var(--surface);
+      border: 1px solid var(--surface-border);
+      color: var(--text-dark);
+      padding: 12px 18px;
+      border-radius: var(--radius-pill);
+      font-weight: 700;
+      font-size: 28px;
+      line-height: 1.15;
+      box-shadow: var(--shadow-soft);
+      backdrop-filter: blur(6px);
+      -webkit-backdrop-filter: blur(6px);
+    }
+
+    .intro-card,
+    .cta-card,
+    .content-card,
+    .info-card,
+    .footer-card {
+      background: var(--surface);
+      border: 1px solid var(--surface-border);
+      border-radius: var(--radius-card);
+      box-shadow: var(--shadow-soft);
+      backdrop-filter: blur(6px);
+      -webkit-backdrop-filter: blur(6px);
+    }
+
+    .intro-card {
+      margin-top: 14px;
+      padding: 18px 16px;
       text-align: center;
     }
 
-    .badge {
+    .intro-card h1 {
+      margin: 0 0 10px;
+      font-size: 24px;
+      line-height: 1.15;
+    }
+
+    .intro-card p {
+      margin: 0;
+      color: var(--text-soft);
+      font-size: 15px;
+      line-height: 1.65;
+    }
+
+    .cta-card {
+      margin-top: 14px;
+      padding: 14px;
+    }
+
+    .cta-stack {
+      display: grid;
+      gap: 10px;
+    }
+
+    .btn {
+      display: block;
+      width: 100%;
+      text-align: center;
+      text-decoration: none;
+      color: var(--text-dark);
+      font-weight: 700;
+      font-size: 15px;
+      line-height: 1.2;
+      padding: 16px 14px;
+      border-radius: var(--radius-button);
+      transition: transform 0.15s ease, background 0.15s ease, box-shadow 0.15s ease;
+      box-shadow: 0 3px 10px rgba(0,0,0,0.08);
+    }
+
+    .btn:hover,
+    .btn:focus-visible {
+      transform: translateY(-1px);
+      outline: none;
+    }
+
+    .btn-request {
+      background: var(--btn-request);
+    }
+
+    .btn-request:hover,
+    .btn-request:focus-visible {
+      background: var(--btn-request-hover);
+    }
+
+    .btn-touchup {
+      background: var(--btn-touchup);
+    }
+
+    .btn-touchup:hover,
+    .btn-touchup:focus-visible {
+      background: var(--btn-touchup-hover);
+    }
+
+    .btn-email {
+      background: var(--btn-email);
+      color: var(--text-light);
+    }
+
+    .btn-email:hover,
+    .btn-email:focus-visible {
+      background: var(--btn-email-hover);
+    }
+
+    .btn-dark {
+      background: var(--btn-dark);
+      color: var(--text-light);
+    }
+
+    .btn-dark:hover,
+    .btn-dark:focus-visible {
+      background: var(--btn-dark-hover);
+    }
+
+    .helper {
+      margin-top: 10px;
+      text-align: center;
+      color: var(--text-soft);
+      font-size: 13px;
+      line-height: 1.5;
+    }
+
+    .content-card {
+      margin-top: 14px;
+      padding: 14px;
+    }
+
+    .section-label {
       display: inline-block;
-      margin-bottom: 14px;
-      padding: 8px 14px;
+      margin-bottom: 12px;
+      background: var(--surface-strong);
+      border: 1px solid var(--surface-border);
       border-radius: 999px;
-      background: rgba(214,162,74,0.14);
-      color: var(--accent-2);
+      padding: 8px 12px;
       font-size: 12px;
       font-weight: 700;
-      letter-spacing: 0.08em;
+      letter-spacing: 0.04em;
       text-transform: uppercase;
     }
 
-    h1 {
-      margin: 0;
-      font-size: clamp(30px, 5vw, 46px);
-      line-height: 1.05;
+    .email-box {
+      background: rgba(255,255,255,0.24);
+      border: 1px solid rgba(255,255,255,0.32);
+      border-radius: 12px;
+      padding: 16px;
+      margin-bottom: 12px;
+      text-align: center;
     }
 
-    .sub {
-      margin: 14px auto 0;
-      max-width: 580px;
-      color: var(--muted);
-      font-size: 16px;
-      line-height: 1.6;
+    .email-box .label {
+      font-size: 12px;
+      font-weight: 700;
+      letter-spacing: 0.04em;
+      text-transform: uppercase;
+      margin-bottom: 8px;
+      color: var(--text-soft);
     }
 
-    .contact-box {
-      margin: 22px auto 0;
-      max-width: 560px;
-      background: rgba(255,255,255,0.04);
-      border: 1px solid var(--border);
-      border-radius: 18px;
-      padding: 18px;
-    }
-
-    .contact-name {
-      font-size: 20px;
-      font-weight: 800;
-      margin-bottom: 6px;
-    }
-
-    .contact-meta {
-      color: var(--muted);
-      font-size: 15px;
-      line-height: 1.6;
+    .email-box .address {
+      font-size: 18px;
+      font-weight: 700;
+      line-height: 1.4;
       word-break: break-word;
-    }
-
-    .section {
-      padding: 24px 22px 28px;
-    }
-
-    .warning {
-      margin-bottom: 18px;
-      padding: 16px 18px;
-      border-radius: 18px;
-      background: var(--warning-bg);
-      border: 1px solid var(--warning-border);
-      color: #f7e2b2;
-      font-size: 14px;
-      line-height: 1.6;
-    }
-
-    .warning strong {
-      color: #fff2cf;
     }
 
     .grid {
       display: grid;
-      grid-template-columns: repeat(2, minmax(0, 1fr));
-      gap: 14px;
-    }
-
-    .btn {
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      text-align: center;
       gap: 10px;
-      min-height: 66px;
+    }
+
+    .info-card {
       padding: 16px;
-      border-radius: 18px;
-      text-decoration: none;
-      font-weight: 800;
+      margin-top: 10px;
+    }
+
+    .info-card h2 {
+      margin: 0 0 8px;
+      font-size: 18px;
+      line-height: 1.2;
+    }
+
+    .info-card p,
+    .info-card li {
+      margin: 0;
+      color: var(--text-soft);
+      font-size: 14px;
+      line-height: 1.65;
+    }
+
+    .info-card ul {
+      margin: 10px 0 0 18px;
+      padding: 0;
+    }
+
+    .steps {
+      display: grid;
+      gap: 10px;
+      margin-top: 10px;
+    }
+
+    .step {
+      background: rgba(255,255,255,0.24);
+      border: 1px solid rgba(255,255,255,0.32);
+      border-radius: 12px;
+      padding: 14px;
+    }
+
+    .step h3 {
+      margin: 0 0 6px;
       font-size: 16px;
-      border: 1px solid var(--border);
-      background: var(--card-2);
-      color: var(--text);
-      transition: transform 0.16s ease, border-color 0.16s ease, background 0.16s ease;
-      cursor: pointer;
+      line-height: 1.2;
     }
 
-    .btn:hover {
-      transform: translateY(-2px);
-      border-color: rgba(214,162,74,0.55);
-      background: #2a2a2a;
-    }
-
-    .btn.primary {
-      background: linear-gradient(180deg, var(--accent-2), var(--accent));
-      color: #161616;
-      border: none;
-    }
-
-    .btn.primary:hover {
-      background: linear-gradient(180deg, #f5cb79, #dca54d);
-    }
-
-    .small-note {
-      margin-top: 16px;
-      text-align: center;
-      color: var(--muted);
+    .step p {
+      margin: 0;
+      color: var(--text-soft);
       font-size: 14px;
       line-height: 1.6;
     }
 
-    .copy-box {
-      margin-top: 24px;
-      background: rgba(255,255,255,0.03);
-      border: 1px solid var(--border);
-      border-radius: 18px;
-      padding: 18px;
+    .footer-card {
+      margin-top: 14px;
+      padding: 18px 16px;
+      text-align: center;
     }
 
-    .copy-box h2 {
-      margin: 0 0 12px;
+    .footer-card h2 {
+      margin: 0 0 8px;
       font-size: 18px;
     }
 
-    .copy-line {
-      margin: 8px 0;
-      color: var(--muted);
+    .footer-card p {
+      margin: 0 0 12px;
+      color: var(--text-soft);
+      font-size: 14px;
       line-height: 1.6;
-      word-break: break-word;
     }
 
-    .copy-line strong {
-      color: var(--text);
-    }
-
-    .steps {
-      margin-top: 24px;
+    .mini-links {
       display: grid;
-      gap: 12px;
+      gap: 8px;
     }
 
-    .step {
-      background: rgba(255,255,255,0.03);
-      border: 1px solid var(--border);
-      border-radius: 18px;
-      padding: 16px;
+    .mini-links a {
+      text-decoration: none;
+      font-weight: 700;
+      color: var(--text-dark);
     }
 
-    .step strong {
-      display: block;
-      margin-bottom: 6px;
-      font-size: 15px;
+    .sticky-cta {
+      position: fixed;
+      left: 0;
+      right: 0;
+      bottom: 0;
+      z-index: 999;
+      padding: 10px 10px calc(10px + env(safe-area-inset-bottom));
+      background: linear-gradient(to top, rgba(159,109,103,0.98), rgba(159,109,103,0.88));
+      backdrop-filter: blur(8px);
+      -webkit-backdrop-filter: blur(8px);
+      border-top: 1px solid rgba(255,255,255,0.18);
     }
 
-    .footer {
-      padding: 0 22px 24px;
+    .sticky-cta-inner {
+      max-width: var(--max-width);
+      margin: 0 auto;
+      display: grid;
+      grid-template-columns: 1.2fr 1fr 1fr;
+      gap: 8px;
+    }
+
+    .sticky-btn {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      min-height: 46px;
+      text-decoration: none;
+      border-radius: 10px;
+      font-size: 12px;
+      font-weight: 700;
       text-align: center;
-      color: #a9a9a9;
-      font-size: 13px;
-      line-height: 1.6;
+      line-height: 1.2;
+      padding: 8px;
+      box-shadow: 0 3px 10px rgba(0,0,0,0.10);
     }
 
-    code {
-      background: rgba(255,255,255,0.06);
-      padding: 2px 7px;
-      border-radius: 8px;
-      color: #fff;
+    .sticky-btn.request { background: var(--btn-request); color: var(--text-dark); }
+    .sticky-btn.touchup { background: var(--btn-touchup); color: var(--text-dark); }
+    .sticky-btn.email { background: var(--btn-email); color: white; }
+
+    @media (min-width: 768px) {
+      body {
+        padding: 28px 18px 120px;
+      }
+
+      .name-pill {
+        font-size: 32px;
+      }
+
+      .intro-card {
+        padding: 22px 22px;
+      }
+
+      .intro-card h1 {
+        font-size: 28px;
+      }
+
+      .cta-stack {
+        grid-template-columns: 1fr 1fr 1fr;
+      }
+
+      .grid {
+        grid-template-columns: 1fr 1fr;
+      }
     }
 
-    @media (max-width: 640px) {
-      .hero { padding: 30px 18px 20px; }
-      .section { padding: 20px 16px 22px; }
-      .footer { padding: 0 16px 18px; }
-      .grid { grid-template-columns: 1fr; }
-      .btn { min-height: 60px; }
+    @media (max-width: 520px) {
+      .name-pill {
+        font-size: 22px;
+        width: 100%;
+      }
+
+      .sticky-cta-inner {
+        grid-template-columns: 1fr 1fr 1fr;
+      }
+
+      .sticky-btn {
+        font-size: 11px;
+        min-height: 48px;
+      }
+
+      .email-box .address {
+        font-size: 16px;
+      }
     }
   </style>
 </head>
 <body>
   <div class="wrap">
-    <div class="card">
-      <div class="hero">
-        <div class="badge">Soul Fire Tattoo Studio</div>
-        <h1>Add Taylor to your contacts</h1>
-        <p class="sub">
-          Saving Taylor as a contact helps make sure booking replies, appointment updates,
-          and important tattoo emails land in your inbox instead of spam or junk.
-        </p>
 
-        <div class="contact-box">
-          <div class="contact-name">Taylor Helman</div>
-          <div class="contact-meta">
-            Soul Fire Tattoo Studio<br />
-            <strong>Email:</strong> taylorhelmantattoo@inkde.sk
-          </div>
-        </div>
+    <div class="hero">
+      <div class="name-pill">Taylor Helman Tattoo</div>
+    </div>
+
+    <div class="intro-card">
+      <h1>Save Taylor’s Email</h1>
+      <p>
+        Saving Taylor’s email helps make sure booking replies, appointment updates, and important messages land in your inbox instead of spam or junk.
+      </p>
+    </div>
+
+    <div class="cta-card">
+      <div class="cta-stack">
+        <a class="btn btn-request" href="https://inkde.sk/taylorhelmantattoo">Start Tattoo Request</a>
+        <a class="btn btn-touchup" href="https://inkde.sk/taylorhelmantattoo/touch-up">Book Touch-Up Evaluation</a>
+        <a class="btn btn-email" href="/taylor-helman-tattoo.vcf">Save Taylor’s Email</a>
       </div>
-
-      <div class="section">
-        <div class="warning">
-          <strong>Using Instagram?</strong> Instagram’s built-in browser may block contact card downloads.
-          If the save button does nothing, tap the menu in the top-right corner and choose
-          <strong>Open in browser</strong>, then try again.
-        </div>
-
-        <div class="grid">
-          <a class="btn primary" href="#" id="downloadVcfBtn">
-            Save Contact Card
-          </a>
-
-          <a
-            class="btn"
-            href="https://taylorhelmantattoo.github.io/contact/taylor-helman-tattoo.vcf"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            Open Direct Contact File
-          </a>
-
-          <a
-            class="btn"
-            href="https://contacts.google.com/"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            Open Google Contacts
-          </a>
-
-          <a
-            class="btn"
-            href="https://outlook.live.com/people/"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            Open Outlook Contacts
-          </a>
-
-          <a
-            class="btn"
-            href="mailto:taylorhelmantattoo@inkde.sk?subject=Add%20Taylor%20to%20Safe%20Sender%20List&body=Please%20add%20taylorhelmantattoo%40inkde.sk%20to%20my%20contacts%20and%20safe%20sender%20list."
-          >
-            Open Email App
-          </a>
-        </div>
-
-        <p class="small-note">
-          Best option: tap <strong>Save Contact Card</strong>. If you are inside Instagram and nothing happens,
-          use <strong>Open in browser</strong> first.
-        </p>
-
-        <div class="copy-box">
-          <h2>Manual save details</h2>
-          <div class="copy-line"><strong>Name:</strong> Taylor Helman</div>
-          <div class="copy-line"><strong>Business:</strong> Soul Fire Tattoo Studio</div>
-          <div class="copy-line"><strong>Email:</strong> taylorhelmantattoo@inkde.sk</div>
-        </div>
-
-        <div class="steps">
-          <div class="step">
-            <strong>iPhone / Apple Mail</strong>
-            Tap Save Contact Card. If you are in Instagram, open this page in your browser first, then save the contact.
-          </div>
-
-          <div class="step">
-            <strong>Android / Gmail</strong>
-            Download and open the contact card, or use Open Google Contacts to add Taylor manually.
-          </div>
-
-          <div class="step">
-            <strong>Outlook / Hotmail</strong>
-            Use Open Outlook Contacts or save the direct contact file to your address book.
-          </div>
-
-          <div class="step">
-            <strong>Already in spam or junk?</strong>
-            Move Taylor’s email into your inbox and mark it as Not Spam or Not Junk after saving the contact.
-          </div>
-        </div>
-      </div>
-
-      <div class="footer">
-        Add this email to your trusted contacts:
-        <code>taylorhelmantattoo@inkde.sk</code><br />
-        This page helps you save the contact, but some social media in-app browsers may still require
-        <strong>Open in browser</strong> for downloads to work properly.
+      <div class="helper">
+        If you do not hear back within 48 hours, please check your spam or junk folder.
       </div>
     </div>
+
+    <div class="content-card">
+      <div class="section-label">Contact Details</div>
+
+      <div class="email-box">
+        <div class="label">Email Address</div>
+        <div class="address">taylorhelmantattoo@inkde.sk</div>
+      </div>
+
+      <div class="grid">
+        <a class="btn btn-dark" href="/taylor-helman-tattoo.vcf">Open Contact Card</a>
+        <a class="btn btn-dark" href="mailto:taylorhelmantattoo@inkde.sk?subject=Tattoo%20Inquiry">Open Email App</a>
+      </div>
+    </div>
+
+    <div class="info-card">
+      <h2>Best option</h2>
+      <p>
+        Tap <strong>Save Taylor’s Email</strong> or <strong>Open Contact Card</strong>, then save Taylor as a contact on your phone or computer.
+      </p>
+    </div>
+
+    <div class="content-card">
+      <div class="section-label">How To Make Sure Emails Come Through</div>
+
+      <div class="steps">
+        <div class="step">
+          <h3>iPhone / Apple Mail</h3>
+          <p>
+            Open the contact card, tap <strong>Add Contact</strong>, and save it. If a message lands in junk, move it back to your inbox.
+          </p>
+        </div>
+
+        <div class="step">
+          <h3>Gmail / Android</h3>
+          <p>
+            Save Taylor as a contact, then open any email from Taylor and mark it as <strong>Not Spam</strong> if needed.
+          </p>
+        </div>
+
+        <div class="step">
+          <h3>Outlook / Hotmail</h3>
+          <p>
+            Save the contact and mark Taylor’s message as <strong>Not Junk</strong> if it goes to the junk folder.
+          </p>
+        </div>
+
+        <div class="step">
+          <h3>Yahoo and other email providers</h3>
+          <p>
+            Add Taylor to your contacts and move any email from spam or junk back to your inbox.
+          </p>
+        </div>
+      </div>
+    </div>
+
+    <div class="info-card">
+      <h2>Why this matters</h2>
+      <ul>
+        <li>Booking replies can sometimes be filtered automatically.</li>
+        <li>Saving Taylor’s email helps prevent missed appointment messages.</li>
+        <li>Marking a message as safe teaches your email provider to trust future emails.</li>
+      </ul>
+    </div>
+
+    <div class="footer-card">
+      <h2>Ready for the next step?</h2>
+      <p>
+        Start a tattoo request, submit a touch-up evaluation, or save Taylor’s email now so you do not miss an important reply.
+      </p>
+      <div class="mini-links">
+        <a href="https://inkde.sk/taylorhelmantattoo">Start Tattoo Request</a>
+        <a href="https://inkde.sk/taylorhelmantattoo/touch-up">Book Touch-Up Evaluation</a>
+        <a href="policies.html">Read Policies & FAQ</a>
+      </div>
+    </div>
+
   </div>
 
-  <script>
-    document.getElementById("downloadVcfBtn").addEventListener("click", function (e) {
-      e.preventDefault();
-
-      const vcard = `BEGIN:VCARD
-VERSION:3.0
-FN:Taylor Helman
-N:Helman;Taylor;;;
-ORG:Soul Fire Tattoo Studio
-EMAIL;TYPE=INTERNET:taylorhelmantattoo@inkde.sk
-END:VCARD`;
-
-      const blob = new Blob([vcard], { type: "text/vcard;charset=utf-8" });
-      const url = URL.createObjectURL(blob);
-
-      const a = document.createElement("a");
-      a.href = url;
-      a.download = "taylor-helman-tattoo.vcf";
-      document.body.appendChild(a);
-      a.click();
-      document.body.removeChild(a);
-
-      setTimeout(function () {
-        URL.revokeObjectURL(url);
-      }, 1000);
-    });
-  </script>
+  <div class="sticky-cta">
+    <div class="sticky-cta-inner">
+      <a class="sticky-btn request" href="https://inkde.sk/taylorhelmantattoo">Start Request</a>
+      <a class="sticky-btn touchup" href="https://inkde.sk/taylorhelmantattoo/touch-up">Touch-Up</a>
+      <a class="sticky-btn email" href="/taylor-helman-tattoo.vcf">Save Email</a>
+    </div>
+  </div>
 </body>
 </html>
