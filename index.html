@@ -328,7 +328,7 @@
       max-width: var(--max-width);
       margin: 0 auto;
       display: grid;
-      grid-template-columns: 1.2fr 1fr 1fr;
+      grid-template-columns: 1.2fr 1fr 1fr 1fr;
       gap: 8px;
     }
 
@@ -347,9 +347,10 @@
       box-shadow: 0 3px 10px rgba(0,0,0,0.10);
     }
 
-    .sticky-btn.request { background: var(--btn-request); color: var(--text-dark); }
-    .sticky-btn.touchup { background: var(--btn-touchup); color: var(--text-dark); }
-    .sticky-btn.email { background: var(--btn-email); color: white; }
+    .sticky-btn.request   { background: var(--btn-request); color: var(--text-dark); }
+    .sticky-btn.touchup   { background: var(--btn-touchup); color: var(--text-dark); }
+    .sticky-btn.email     { background: var(--btn-email);   color: white; }
+    .sticky-btn.portfolio { background: var(--btn-dark);    color: white; }
 
     @media (min-width: 768px) {
       body {
@@ -504,7 +505,7 @@
       }
 
       .sticky-cta-inner {
-        grid-template-columns: 1fr 1fr 1fr;
+        grid-template-columns: 1fr 1fr 1fr 1fr;
       }
 
       .sticky-btn {
@@ -533,13 +534,7 @@
     <div class="intro-card bio-card">
       <div class="bio-location">&#x1F4CD; London, Ontario &mdash; Soul Fire Tattoo Studio</div>
       <p>Award-winning <strong>micro realism</strong> tattoo artist with a background in henna artistry. Known for fine-line florals, pet portraits, and collectible flash designs &mdash; every piece is built with precision and intention.</p>
-      <div class="bio-specialties">
-        <span class="bio-tag">Micro Realism</span>
-        <span class="bio-tag">Fine-Line Florals</span>
-        <span class="bio-tag">Pet Portraits</span>
-        <span class="bio-tag">Flash Designs</span>
-        <span class="bio-tag">Henna Background</span>
-      </div>
+
     </div>
     <div class="intro-card">
       <h1>Save Taylor’s Email</h1>
@@ -554,6 +549,7 @@
         <a class="btn btn-touchup" href="https://inkde.sk/taylorhelmantattoo/book/018fa78c-7cac-733b-7204-d86cf7051d08">Book Touch-Up Evaluation</a>
         <a class="btn btn-email" href="/taylor-helman-tattoo.vcf" download="taylor-helman-tattoo.vcf" onclick="saveVcf(event)">Save Taylor's Email</a>
         <button class="btn btn-copy" id="copyEmailBtn" onclick="copyEmail()">Copy Email Address</button>
+        <a class="btn btn-dark" href="portfolio.html">View My Work</a>
       </div>
       <div class="helper">
         <strong>iPhone tip:</strong> Long-press &ldquo;Save Taylor&rsquo;s Email&rdquo; then dismiss the menu &mdash; the contact card will already be open behind it ready to save.<br><br>
@@ -652,9 +648,10 @@
 
   <div class="sticky-cta">
     <div class="sticky-cta-inner">
-      <a class="sticky-btn request" href="https://inkde.sk/taylorhelmantattoo">Start Request</a>
-      <a class="sticky-btn touchup" href="https://inkde.sk/taylorhelmantattoo/touch-up">Touch-Up</a>
-      <a class="sticky-btn email" href="/taylor-helman-tattoo.vcf" download="taylor-helman-tattoo.vcf" onclick="saveVcf(event)">Save Email</a>
+      <a class="sticky-btn request"   href="https://inkde.sk/taylorhelmantattoo">Start Request</a>
+      <a class="sticky-btn touchup"   href="https://inkde.sk/taylorhelmantattoo/touch-up">Touch-Up</a>
+      <a class="sticky-btn email"     href="/taylor-helman-tattoo.vcf" download="taylor-helman-tattoo.vcf" onclick="saveVcf(event)">Save Email</a>
+      <a class="sticky-btn portfolio" href="portfolio.html">My Work</a>
     </div>
   </div>
   <script>
