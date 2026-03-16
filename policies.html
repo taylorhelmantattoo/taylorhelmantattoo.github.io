@@ -309,7 +309,7 @@
       max-width: var(--max-width);
       margin: 0 auto;
       display: grid;
-      grid-template-columns: 1.2fr 1fr 1fr;
+      grid-template-columns: 1.2fr 1fr 1fr 1fr;
       gap: 8px;
     }
 
@@ -330,7 +330,8 @@
 
     .sticky-btn.request { background: var(--btn-request); color: var(--text-dark); }
     .sticky-btn.touchup { background: var(--btn-touchup); color: var(--text-dark); }
-    .sticky-btn.email { background: var(--btn-email); color: white; }
+    .sticky-btn.avail   { background: var(--btn-email);   color: white; }
+    .sticky-btn.email   { background: var(--btn-dark);    color: white; }
 
     @media (min-width: 768px) {
       body {
@@ -365,7 +366,7 @@
       }
 
       .sticky-cta-inner {
-        grid-template-columns: 1fr 1fr 1fr;
+        grid-template-columns: 1fr 1fr 1fr 1fr;
       }
 
       .sticky-btn {
@@ -579,8 +580,7 @@
       </p>
       <div class="mini-links">
         <a href="https://inkde.sk/taylorhelmantattoo">Start Tattoo Request</a>
-        <a href="https://inkde.sk/taylorhelmantattoo/touch-up">Book Touch-Up Evaluation</a>
-        <a href="index.html">Save Taylor’s Email</a>
+        <a href="https://inkde.sk/taylorhelmantattoo/touch-up">Book Touch-Up Evaluation</a>        <a href="availability.html">Current Availability</a>        <a href="index.html">Save Taylor’s Email</a>
       </div>
     </div>
 
@@ -588,9 +588,10 @@
 
   <div class="sticky-cta">
     <div class="sticky-cta-inner">
-      <a class="sticky-btn request" href="https://inkde.sk/taylorhelmantattoo">Start Tattoo Request</a>
+      <a class="sticky-btn request" href="https://inkde.sk/taylorhelmantattoo">Start Request</a>
       <a class="sticky-btn touchup" href="https://inkde.sk/taylorhelmantattoo/touch-up">Touch-Up</a>
-      <a class="sticky-btn email" href="index.html">Save Email</a>
+      <a class="sticky-btn avail"   href="availability.html">Availability</a>
+      <a class="sticky-btn email"   href="index.html">Save Email</a>
     </div>
   </div>
 </body>

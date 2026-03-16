@@ -517,6 +517,54 @@
         font-size: 16px;
       }
     }
+
+    /* ── Availability summary card ───────────────────────────────────────── */
+    @keyframes availShimmer {
+      0%   { background-position: -700px 0; }
+      100% { background-position:  700px 0; }
+    }
+
+    .avail-skel {
+      background: linear-gradient(
+        90deg,
+        rgba(255,255,255,0.09) 25%,
+        rgba(255,255,255,0.24) 50%,
+        rgba(255,255,255,0.09) 75%
+      );
+      background-size: 1400px 100%;
+      animation: availShimmer 1.6s infinite;
+      border-radius: 8px;
+      margin-bottom: 8px;
+    }
+
+    .avail-skel-title { height: 16px; width: 48%; }
+    .avail-skel-sub   { height: 13px; width: 70%; }
+
+    .avail-summary-row {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      margin-bottom: 4px;
+    }
+
+    .avail-summary-dot {
+      width: 11px;
+      height: 11px;
+      border-radius: 50%;
+      flex-shrink: 0;
+    }
+
+    .avail-summary-status {
+      font-size: 16px;
+      font-weight: 700;
+      line-height: 1.2;
+    }
+
+    .avail-summary-next {
+      font-size: 13px;
+      color: var(--text-soft);
+      margin: 2px 0 10px;
+    }
   </style>
 </head>
 <body>
@@ -535,6 +583,31 @@
       <div class="bio-location">&#x1F4CD; London, Ontario &mdash; Soul Fire Tattoo Studio</div>
       <p>Award-winning <strong>micro realism</strong> tattoo artist with a background in henna artistry. Known for fine-line florals, pet portraits, and collectible flash designs &mdash; every piece is built with precision and intention.</p>
 
+    </div>
+    <div class="content-card" id="availSummaryCard" style="padding:16px;">
+      <div class="section-label">Availability</div>
+
+      <!-- Loading -->
+      <div id="availLoading">
+        <div class="avail-skel avail-skel-title"></div>
+        <div class="avail-skel avail-skel-sub"></div>
+      </div>
+
+      <!-- Loaded -->
+      <div id="availLoaded" style="display:none;">
+        <div class="avail-summary-row">
+          <span class="avail-summary-dot" id="availDot"></span>
+          <span class="avail-summary-status" id="availStatus"></span>
+        </div>
+        <div class="avail-summary-next" id="availNext" style="display:none;"></div>
+        <a class="btn btn-dark" href="availability.html">See Full Availability &rarr;</a>
+      </div>
+
+      <!-- Fallback -->
+      <div id="availFallback" style="display:none;">
+        <p style="margin:0 0 12px; font-size:14px; color:var(--text-soft); line-height:1.6;">Availability varies &mdash; submit a request and Taylor will confirm dates manually.</p>
+        <a class="btn btn-dark" href="availability.html">Check Availability &rarr;</a>
+      </div>
     </div>
     <div class="intro-card">
       <h1>Save Taylor’s Email</h1>
@@ -640,7 +713,8 @@
       <div class="mini-links">
         <a href="https://inkde.sk/taylorhelmantattoo/book/018f9c9c-d2b6-50dc-5765-f9b922db88c8">Start Tattoo Request</a>
         <a href="https://inkde.sk/taylorhelmantattoo/book/018fa78c-7cac-733b-7204-d86cf7051d08">Book Touch-Up Evaluation</a>
-        <a href="policies.html">Read Policies & FAQ</a>
+        <a href="availability.html">Current Availability</a>
+        <a href="policies.html">Read Policies &amp; FAQ</a>
       </div>
     </div>
 
@@ -650,7 +724,7 @@
     <div class="sticky-cta-inner">
       <a class="sticky-btn request"   href="https://inkde.sk/taylorhelmantattoo">Start Request</a>
       <a class="sticky-btn touchup"   href="https://inkde.sk/taylorhelmantattoo/touch-up">Touch-Up</a>
-      <a class="sticky-btn email"     href="/taylor-helman-tattoo.vcf" download="taylor-helman-tattoo.vcf" onclick="saveVcf(event)">Save Email</a>
+      <a class="sticky-btn email"     href="availability.html">Availability</a>
       <a class="sticky-btn portfolio" href="portfolio.html">My Work</a>
     </div>
   </div>
@@ -742,6 +816,35 @@
         }
       }
     }
+
+    // Availability summary card
+    (function () {
+      var WORKER = 'https://taylorhelmantattoo.workers.dev/api/availability';
+      var DOT = { open: '#eddecf', limited: '#d1aa99', closed: 'rgba(31,41,55,0.30)' };
+      var LABEL = { open: 'Booking Open', limited: 'Limited Availability', closed: 'Books Currently Closed' };
+
+      function showLoaded(d) {
+        document.getElementById('availLoading').style.display = 'none';
+        document.getElementById('availDot').style.background = DOT[d.status] || 'rgba(31,41,55,0.18)';
+        document.getElementById('availStatus').textContent = LABEL[d.status] || d.statusLabel || 'View Availability';
+        var nextEl = document.getElementById('availNext');
+        if (d.nextAvailableLabel && d.status !== 'closed') {
+          nextEl.textContent = 'Next opening: ' + d.nextAvailableLabel;
+          nextEl.style.display = 'block';
+        }
+        document.getElementById('availLoaded').style.display = 'block';
+      }
+
+      function showFallback() {
+        document.getElementById('availLoading').style.display = 'none';
+        document.getElementById('availFallback').style.display = 'block';
+      }
+
+      fetch(WORKER, { method: 'GET', headers: { Accept: 'application/json' } })
+        .then(function (r) { if (!r.ok) throw new Error(r.status); return r.json(); })
+        .then(function (d) { d && d.fallback ? showFallback() : showLoaded(d); })
+        .catch(showFallback);
+    })();
   </script>
 </body>
 </html>
