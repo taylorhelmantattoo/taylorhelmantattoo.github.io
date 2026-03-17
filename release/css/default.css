@@ -1,0 +1,35 @@
+.note, fieldset.action {
+	color: #fff;
+	background:#9da2a6;
+	border-color:#e5e5e5 #797c80 #797c80 #e5e5e5;
+}
+
+.note {
+	padding: 8px;
+	font-weight: bold;
+}
+
+fieldset {
+	background:#f2f2e6;
+	border:1px solid #fff;
+	border-color:#fff #666661 #666661 #fff;
+}
+
+.label {
+	color: #666;
+}
+
+.legend, legend {
+	background:#bfbf30;
+	color:#fff;
+	border:1px solid #fff;
+	border-color:#e5e5c3 #505014 #505014 #e5e5c3;
+}
+hr { background-color: #3f94d6; }
+
+.NFButton {
+	color:#fff;
+	background:url(../img/button.png) repeat-x 0 0;
+}
+.NFButtonLeft {background:url(../img/button-left.png) no-repeat 0 0;}
+.NFButtonRight {background:url(../img/button-right.png) no-repeat 0 0;}

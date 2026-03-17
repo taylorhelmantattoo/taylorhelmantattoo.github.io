@@ -1,0 +1,69 @@
+2026-03-16T08:19:52-04:00
+Array
+(
+    [type] => 1
+    [message] => Uncaught TypeError: Cannot access offset of type string on string in /home/vol15_7/infinityfree.com/if0_41403687/release.taylorhelmantattoo.com/htdocs/index.php:131
+Stack trace:
+#0 {main}
+  thrown
+    [file] => /home/vol15_7/infinityfree.com/if0_41403687/release.taylorhelmantattoo.com/htdocs/index.php
+    [line] => 131
+)
+
+---
+2026-03-16T08:19:56-04:00
+Array
+(
+    [type] => 1
+    [message] => Uncaught TypeError: Cannot access offset of type string on string in /home/vol15_7/infinityfree.com/if0_41403687/release.taylorhelmantattoo.com/htdocs/index.php:131
+Stack trace:
+#0 {main}
+  thrown
+    [file] => /home/vol15_7/infinityfree.com/if0_41403687/release.taylorhelmantattoo.com/htdocs/index.php
+    [line] => 131
+)
+
+---
+2026-03-16T08:20:55-04:00
+Array
+(
+    [type] => 1
+    [message] => Uncaught TypeError: Cannot access offset of type string on string in /home/vol15_7/infinityfree.com/if0_41403687/release.taylorhelmantattoo.com/htdocs/index.php:131
+Stack trace:
+#0 {main}
+  thrown
+    [file] => /home/vol15_7/infinityfree.com/if0_41403687/release.taylorhelmantattoo.com/htdocs/index.php
+    [line] => 131
+)
+
+---
+2026-03-16T09:31:17-04:00
+Array
+(
+    [type] => 64
+    [message] => __autoload() is no longer supported, use spl_autoload_register() instead
+    [file] => /home/vol15_7/infinityfree.com/if0_41403687/release.taylorhelmantattoo.com/htdocs/dompdf/include/autoload.inc.php
+    [line] => 83
+)
+
+---
+2026-03-16T09:34:43-04:00
+Array
+(
+    [type] => 64
+    [message] => __autoload() is no longer supported, use spl_autoload_register() instead
+    [file] => /home/vol15_7/infinityfree.com/if0_41403687/release.taylorhelmantattoo.com/htdocs/dompdf/include/autoload.inc.php
+    [line] => 83
+)
+
+---
+2026-03-16T09:42:06-04:00
+Array
+(
+    [type] => 64
+    [message] => __autoload() is no longer supported, use spl_autoload_register() instead
+    [file] => /home/vol15_7/infinityfree.com/if0_41403687/release.taylorhelmantattoo.com/htdocs/dompdf/include/autoload.inc.php
+    [line] => 83
+)
+
+---
