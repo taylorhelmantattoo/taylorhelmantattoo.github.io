@@ -3,6 +3,10 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="theme-color" content="#9f6d67" />
+  <meta name="apple-mobile-web-app-capable" content="yes" />
+  <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
+  <link rel="preconnect" href="https://w.behold.so" />
   <title>Portfolio | Taylor Helman Tattoo</title>
   <style>
     :root {
@@ -30,9 +34,9 @@
       --max-width: 760px;
     }
 
-    * { box-sizing: border-box; }
+    * { box-sizing: border-box; -webkit-tap-highlight-color: transparent; }
 
-    html { scroll-behavior: smooth; }
+    html { scroll-behavior: smooth; text-size-adjust: 100%; -webkit-text-size-adjust: 100%; }
 
     body {
       margin: 0;
@@ -228,6 +232,7 @@
       line-height: 1.2;
       padding: 16px 14px;
       border-radius: var(--radius-button);
+      touch-action: manipulation;
       transition: transform 0.15s ease, background 0.15s ease;
       box-shadow: 0 3px 10px rgba(0,0,0,0.08);
       margin-top: 10px;
@@ -237,6 +242,10 @@
     .btn:focus-visible {
       transform: translateY(-1px);
       outline: none;
+    }
+
+    .btn:active {
+      transform: translateY(0);
     }
 
     .btn-request { background: var(--btn-request); }
@@ -278,6 +287,7 @@
       line-height: 1.2;
       padding: 8px;
       box-shadow: 0 3px 10px rgba(0,0,0,0.10);
+      touch-action: manipulation;
     }
 
     .sticky-btn.request { background: var(--btn-request); color: var(--text-dark); }

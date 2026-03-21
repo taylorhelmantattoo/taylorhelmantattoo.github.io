@@ -3,7 +3,10 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Tattoo Policies & FAQ | Taylor Helman Tattoo</title>
+  <meta name="theme-color" content="#9f6d67" />
+  <meta name="apple-mobile-web-app-capable" content="yes" />
+  <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
+  <title>Tattoo Policies &amp; FAQ | Taylor Helman Tattoo</title>
   <style>
     :root {
       --bg: #9f6d67;
@@ -34,10 +37,12 @@
       --max-width: 760px;
     }
 
-    * { box-sizing: border-box; }
+    * { box-sizing: border-box; -webkit-tap-highlight-color: transparent; }
 
     html {
       scroll-behavior: smooth;
+      text-size-adjust: 100%;
+      -webkit-text-size-adjust: 100%;
     }
 
     body {
@@ -126,6 +131,7 @@
       line-height: 1.2;
       padding: 16px 14px;
       border-radius: var(--radius-button);
+      touch-action: manipulation;
       transition: transform 0.15s ease, background 0.15s ease, box-shadow 0.15s ease;
       box-shadow: 0 3px 10px rgba(0,0,0,0.08);
     }
@@ -134,6 +140,10 @@
     .btn:focus-visible {
       transform: translateY(-1px);
       outline: none;
+    }
+
+    .btn:active {
+      transform: translateY(0);
     }
 
     .btn-request {
@@ -326,6 +336,7 @@
       line-height: 1.2;
       padding: 8px;
       box-shadow: 0 3px 10px rgba(0,0,0,0.10);
+      touch-action: manipulation;
     }
 
     .sticky-btn.request { background: var(--btn-request); color: var(--text-dark); }
@@ -580,7 +591,10 @@
       </p>
       <div class="mini-links">
         <a href="https://inkde.sk/taylorhelmantattoo">Start Tattoo Request</a>
-        <a href="https://inkde.sk/taylorhelmantattoo/touch-up">Book Touch-Up Evaluation</a>        <a href="availability.html">Current Availability</a>        <a href="index.html">Save Taylor’s Email</a>
+        <a href="https://inkde.sk/taylorhelmantattoo/touch-up">Book Touch-Up Evaluation</a>
+        <a href="availability.html">Current Availability</a>
+        <a href="index.html">Save Taylor's Email</a>
+        <a href="release-form.html">Sign Release Form</a>
       </div>
     </div>
 

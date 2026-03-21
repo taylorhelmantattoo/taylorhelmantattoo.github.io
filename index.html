@@ -3,7 +3,12 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Save Taylor’s Email | Taylor Helman Tattoo</title>
+  <meta name="theme-color" content="#9f6d67" />
+  <meta name="apple-mobile-web-app-capable" content="yes" />
+  <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
+  <link rel="preconnect" href="https://taylorhelmantattoo-availability.taylorhelmantattoo.workers.dev" />
+  <link rel="preconnect" href="https://api.qrserver.com" />
+  <title>Save Taylor's Email | Taylor Helman Tattoo</title>
   <style>
     :root {
       --bg: #9f6d67;
@@ -34,10 +39,12 @@
       --max-width: 760px;
     }
 
-    * { box-sizing: border-box; }
+    * { box-sizing: border-box; -webkit-tap-highlight-color: transparent; }
 
     html {
       scroll-behavior: smooth;
+      text-size-adjust: 100%;
+      -webkit-text-size-adjust: 100%;
     }
 
     body {
@@ -128,6 +135,7 @@
       line-height: 1.2;
       padding: 16px 14px;
       border-radius: var(--radius-button);
+      touch-action: manipulation;
       transition: transform 0.15s ease, background 0.15s ease, box-shadow 0.15s ease;
       box-shadow: 0 3px 10px rgba(0,0,0,0.08);
     }
@@ -136,6 +144,10 @@
     .btn:focus-visible {
       transform: translateY(-1px);
       outline: none;
+    }
+
+    .btn:active {
+      transform: translateY(0);
     }
 
     .btn-request {
@@ -180,7 +192,7 @@
       margin-top: 10px;
       text-align: center;
       color: var(--text-soft);
-      font-size: 13px;
+      font-size: 14px;
       line-height: 1.5;
     }
 
@@ -345,11 +357,10 @@
       line-height: 1.2;
       padding: 8px;
       box-shadow: 0 3px 10px rgba(0,0,0,0.10);
+      touch-action: manipulation;
     }
-
-    .sticky-btn.request   { background: var(--btn-request); color: var(--text-dark); }
     .sticky-btn.touchup   { background: var(--btn-touchup); color: var(--text-dark); }
-    .sticky-btn.email     { background: var(--btn-email);   color: white; }
+    .sticky-btn.avail     { background: var(--btn-email);   color: white; }
     .sticky-btn.portfolio { background: var(--btn-dark);    color: white; }
 
     @media (min-width: 768px) {
@@ -650,6 +661,7 @@
         src="https://api.qrserver.com/v1/create-qr-code/?size=200x200&ecc=M&data=BEGIN%3AVCARD%0AVERSION%3A3.0%0AFN%3ATaylor%20Helman%0AN%3AHelman%3BTaylor%3B%3B%3B%0AORG%3ASoul%20Fire%20Tattoo%20Studio%0ATITLE%3ATattoo%20Artist%0AEMAIL%3BTYPE%3DINTERNET%3Ataylorhelmantattoo%40inkde.sk%0AEND%3AVCARD"
         alt="QR code — scan to add Taylor Helman as a contact"
         width="180" height="180"
+        loading="lazy"
         onerror="this.closest('#qrCard').style.display='none'"
       />
       <p>On iPhone: open your camera app (swipe down for Control Center), point it here, and tap <strong>Add to Contacts</strong> &mdash; works without leaving Instagram.</p>
@@ -715,6 +727,7 @@
         <a href="https://inkde.sk/taylorhelmantattoo/book/018fa78c-7cac-733b-7204-d86cf7051d08">Book Touch-Up Evaluation</a>
         <a href="availability.html">Current Availability</a>
         <a href="policies.html">Read Policies &amp; FAQ</a>
+        <a href="release-form.html">Sign Release Form</a>
       </div>
     </div>
 
@@ -724,7 +737,7 @@
     <div class="sticky-cta-inner">
       <a class="sticky-btn request"   href="https://inkde.sk/taylorhelmantattoo/book/018f9c9c-d2b6-50dc-5765-f9b922db88c8">Start Request</a>
       <a class="sticky-btn touchup"   href="https://inkde.sk/taylorhelmantattoo/book/018fa78c-7cac-733b-7204-d86cf7051d08">Touch-Up</a>
-      <a class="sticky-btn email"     href="availability.html">Availability</a>
+      <a class="sticky-btn avail"     href="availability.html">Availability</a>
       <a class="sticky-btn portfolio" href="portfolio.html">My Work</a>
     </div>
   </div>
