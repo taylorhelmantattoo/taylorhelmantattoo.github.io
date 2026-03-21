@@ -30,6 +30,17 @@ if(!isset($redirect_url))
 // Only active when $settings['two_step'] is true (set in configs/tattoo.php)
 if (!empty($settings['two_step']) && !isset($_GET['print']) && !isset($_GET['topdf'])) {
 
+    // Redirect bare root hits to the artist step (two-step flow has replaced the raw form)
+    $has_step   = isset($_GET['step']);
+    $has_client = isset($_GET['client']);
+    $is_ajax    = isset($_GET['get_artist_sig']) || isset($_GET['has_artist_pin']) ||
+                  isset($_GET['set_artist_pin']) || isset($_GET['reset_artist_pin']);
+    if (!$has_step && !$has_client && !$is_ajax) {
+        $release = preg_replace('/[^a-z0-9_\-]/', '', $_GET['release'] ?? 'tattoo');
+        header('Location: ?step=artist&release=' . $release, true, 302);
+        exit;
+    }
+
     // â”€â”€ Step A: artist POST - generate token and show link â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
     // get_artist_sig AJAX endpoint (called by JS auto-fill)
     if (isset($_GET['get_artist_sig'])) {
