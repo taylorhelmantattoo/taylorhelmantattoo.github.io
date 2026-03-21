@@ -133,6 +133,50 @@ if (!empty($settings['two_step']) && !isset($_GET['print']) && !isset($_GET['top
                 $pin_error = 'Please fill in Artist, Placement, and Signature before generating the link.';
             } else {
                 save_artist_sig($tok_artist, $tok_sig);
+
+                // --- CLIENT-INITIATED COMPLETION ---
+                // Client submitted first (?mode=client); Taylor received a
+                // ?step=artist&client_ref=KEY link. Load stored client data,
+                // merge with artist fields, generate and email the final PDF.
+                $client_ref_key = trim($_GET['client_ref'] ?? '');
+                if ($client_ref_key) {
+                    $cdata = load_client_data($client_ref_key);
+                    if (!$cdata) {
+                        $pin_error = 'The client session has expired (>72 h) or the link is invalid. Ask the client to resubmit their portion.';
+                    } else {
+                        $cdata['artist']                  = $tok_artist;
+                        $cdata['fields']                  = [0 => $tok_placement];
+                        $cdata['signature_artist_data']   = $tok_sig;
+                        $cdata['signature_artist_status'] = '1';
+                        $cdata['artist_completed_at']     = date('Y-m-d H:i:s');
+                        $pdf_result = send_completion_pdf($cdata, $settings);
+                        delete_client_data($client_ref_key);
+                        if ($pdf_result === true) {
+                            ?>
+<!DOCTYPE html>
+<html lang="en">
+<head><meta charset="UTF-8" /><meta name="viewport" content="width=700, minimum-scale=1.0, maximum-scale=1.5, user-scalable=0" />
+<link rel="stylesheet" type="text/css" href="css/style.css" /><link rel="stylesheet" type="text/css" href="css/default.css" />
+<title>Form Finalized</title>
+<style>.two-step-wrap{max-width:660px;margin:30px auto;font-family:Arial,sans-serif}.two-step-card{background:#f9f9f9;border:1px solid #ddd;border-radius:8px;padding:24px 28px;margin-bottom:20px}h2{margin-top:0}.back-link{font-size:13px;color:#666;text-decoration:none}</style>
+</head><body>
+<div class="two-step-wrap">
+  <div class="two-step-card">
+    <h2>&#10003; Release Form Finalized</h2>
+    <p>The completed form for <strong><?=htmlspecialchars($cdata['name'])?></strong> has been emailed to <strong><?=htmlspecialchars($settings['email_to'])?></strong> with the client CC&rsquo;d.</p>
+    <p style="color:#555;font-size:13px;">Both client and artist sections are complete. The form is fully executed.</p>
+  </div>
+  <a class="back-link" href="?step=artist&release=<?=htmlspecialchars($_GET['release'] ?? 'tattoo')?>">&larr; Start another</a>
+</div></body></html>
+<?php
+                            die;
+                        } else {
+                            $pin_error = 'PDF/email failed: ' . (is_string($pdf_result) ? $pdf_result : 'unknown error');
+                        }
+                    }
+                    // On error above, fall through so the artist form re-renders with $pin_error
+                } else {
+                // --- NORMAL ARTIST-FIRST FLOW ---
                 $token      = generate_client_token($tok_artist, $tok_placement, $tok_sig, $tok_cemail, $tok_cphone, $_GET['release'] ?? 'tattoo');
                 $base_url   = (isset($_SERVER['HTTPS']) && $_SERVER['HTTPS'] === 'on' ? 'https' : 'http') . '://' . $_SERVER['HTTP_HOST'] . strtok($_SERVER['REQUEST_URI'], '?');
                 $client_url = $base_url . '?release=' . ($_GET['release'] ?? 'tattoo') . '&client=' . urlencode($token);
@@ -234,6 +278,7 @@ function copyURL(e) {
 </html>
 <?php
                 die;
+                } // end: normal artist-first flow
             }
         }
     }
@@ -276,7 +321,12 @@ canvas.signature{display:block}
   <div class="two-step-card">
     <h2><?=$settings['name']?> Release Form - Artist Section</h2>
     <?php if ($pin_error) echo '<div class="error">'.htmlspecialchars($pin_error).'</div>'; ?>
-    <form method="post" action="?step=artist&release=<?=htmlspecialchars($_GET['release'] ?? 'tattoo')?>">
+    <?php if (!empty($_GET['client_ref'])): ?>
+    <div style="background:#e8f4e8;border:1px solid #5a8a5a;border-radius:4px;padding:10px 14px;margin-bottom:16px;font-size:14px;">
+      &#9989; A client has submitted their portion of this release form. Complete the artist section below to finalise and email the signed document.
+    </div>
+    <?php endif; ?>
+    <form method="post" action="?step=artist&release=<?=htmlspecialchars($_GET['release'] ?? 'tattoo')?><?=isset($_GET['client_ref']) ? '&amp;client_ref='.htmlspecialchars($_GET['client_ref']) : ''?>">
 
       <label for="tok_artist">Artist:</label>
       <select name="tok_artist" id="tok_artist" required>
@@ -733,7 +783,9 @@ if(is_array($settings['artists']) && count($settings['artists'])>0) {
 	// CLIENT_ONLY_MODE: artist section is not rendered; submit a blank hidden field so
 	// downstream code does not get an undefined index notice.
 	if (defined('CLIENT_ONLY_MODE')) {
-		$artist_input = '<input type="hidden" name="artist" value="" /><div class="break"></div>';
+		$artist_input = '<input type="hidden" name="artist" value="" />'
+		              . '<input type="hidden" name="workflow_mode" value="client" />'
+		              . '<div class="break"></div>';
 	} else {
 	$artist_input='<div class="label" id="input_artist">Artist:<span class="required">*</span></div>';
 	// Two-step client view - show locked read-only artist name
@@ -1346,7 +1398,40 @@ if($submit && !isset($_GET['debug'])) {
 			);
 		}
 	}
-//
+
+	// --- CLIENT_ONLY_MODE SUBMIT: save partial record, notify Taylor, no PDF yet ---
+	// The client has completed their stage. Store data, email Taylor the
+	// artist-completion link (?step=artist&client_ref=KEY). Final PDF is generated
+	// only after Taylor completes the artist section.
+	if (!empty($_POST['workflow_mode']) && $_POST['workflow_mode'] === 'client') {
+		$cdata = [
+			'name'                   => $_POST['name']    ?? '',
+			'address'                => $_POST['address'] ?? '',
+			'phone'                  => $_POST['phone']   ?? '',
+			'email'                  => $_POST['email']   ?? '',
+			'dobM'                   => $_POST['dobM']    ?? '',
+			'dobD'                   => $_POST['dobD']    ?? '',
+			'dobY'                   => $_POST['dobY']    ?? '',
+			'provisions'             => $_POST['provisions'] ?? [],
+			'signature_client_typed' => $_POST['signature_client_typed'] ?? '',
+			'signature_client_data'  => $_POST['signature_client_data']  ?? '',
+			'esign_consent'          => $_POST['esign_consent'] ?? '',
+			'photo_data'             => $_POST['photo_data']    ?? '',
+			'photo_status'           => $_POST['photo_status']  ?? '',
+			'submitted_at'           => date('Y-m-d H:i:s'),
+			'exp'                    => time() + (72 * 3600),
+		];
+		$client_ref  = save_client_data($cdata);
+		$base_url    = (isset($_SERVER['HTTPS']) && $_SERVER['HTTPS'] === 'on' ? 'https' : 'http')
+		             . '://' . $_SERVER['HTTP_HOST'] . strtok($_SERVER['REQUEST_URI'], '?');
+		$release_p   = urlencode($_GET['release'] ?? 'tattoo');
+		$completion_url = $base_url . '?step=artist&release=' . $release_p . '&client_ref=' . urlencode($client_ref);
+		send_artist_notification_email($settings['email_to'], $completion_url, $cdata['name'], $cdata['email']);
+		echo 'sent';
+		die;
+	}
+	// ------------------------------------------------------------------
+
    $pdf_result = send_pdf($html,$_POST['email']);
    if($pdf_result === true) {
       echo "sent";

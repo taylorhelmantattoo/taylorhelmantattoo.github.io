@@ -446,6 +446,211 @@ function send_pdf($html, $email) {
         return 'Email failed: ' . $e->getMessage();
     }
 }
+
+// ── Client-initiated form: data persistence ─────────────────────────────────
+
+function save_client_data($data) {
+    $dir = __DIR__ . '/tmp';
+    if (!is_dir($dir)) mkdir($dir, 0750, true);
+    $htaccess = $dir . '/.htaccess';
+    if (!file_exists($htaccess)) file_put_contents($htaccess, "deny from all\n");
+    $key  = bin2hex(random_bytes(16));
+    file_put_contents($dir . '/' . $key . '_cdata.dat', json_encode($data, JSON_UNESCAPED_UNICODE));
+    return $key;
+}
+
+function load_client_data($key) {
+    if (!preg_match('/^[0-9a-f]{32}$/', $key)) return null;
+    $file = __DIR__ . '/tmp/' . $key . '_cdata.dat';
+    if (!file_exists($file)) return null;
+    $data = json_decode(file_get_contents($file), true);
+    if (!$data || (isset($data['exp']) && $data['exp'] < time())) return null;
+    return $data;
+}
+
+function delete_client_data($key) {
+    if (!preg_match('/^[0-9a-f]{32}$/', $key)) return;
+    @unlink(__DIR__ . '/tmp/' . $key . '_cdata.dat');
+}
+
+// ── Client-initiated form: Taylor notification email ─────────────────────────
+
+function send_artist_notification_email($to, $completion_url, $client_name, $client_email = '') {
+    require_once __DIR__ . '/smtp_config.php';
+    require_once __DIR__ . '/phpmailer/PHPMailer.php';
+    require_once __DIR__ . '/phpmailer/SMTP.php';
+    require_once __DIR__ . '/phpmailer/Exception.php';
+    try {
+        $mail = new \PHPMailer\PHPMailer\PHPMailer(true);
+        $mail->isSMTP();
+        $mail->Host       = SMTP_HOST;
+        $mail->SMTPAuth   = true;
+        $mail->Username   = SMTP_USER;
+        $mail->Password   = SMTP_PASS;
+        $mail->SMTPSecure = \PHPMailer\PHPMailer\PHPMailer::ENCRYPTION_STARTTLS;
+        $mail->Port       = SMTP_PORT;
+        $mail->setFrom(SMTP_FROM, SMTP_NAME);
+        $mail->addAddress($to);
+        $safe_name  = htmlspecialchars($client_name);
+        $safe_email = htmlspecialchars($client_email);
+        $safe_url   = htmlspecialchars($completion_url);
+        $mail->Subject = 'Release Form Submitted — Complete Artist Section: ' . $client_name;
+        $mail->isHTML(true);
+        $mail->Body = '<p>A client has submitted their portion of the tattoo release form and is awaiting your completion.</p>'
+            . '<p><strong>Client:</strong> ' . $safe_name
+            . ($client_email ? '<br /><strong>Email:</strong> ' . $safe_email : '') . '</p>'
+            . '<p>Open the link below to add the artist section and send the finalised PDF. <strong>Link valid 72 hours.</strong></p>'
+            . '<p><a href="' . $safe_url . '">' . $safe_url . '</a></p>'
+            . '<p>&mdash; Taylor Helman Tattoo</p>';
+        $mail->AltBody = "Client {$client_name} has submitted their release form portion.\n\n"
+            . "Complete the artist section here (link valid 72 h):\n{$completion_url}\n\n&mdash; Taylor Helman Tattoo";
+        $mail->send();
+        return ['ok' => true];
+    } catch (\PHPMailer\PHPMailer\Exception $e) {
+        error_log('send_artist_notification_email: ' . $mail->ErrorInfo);
+        return ['ok' => false, 'error' => $mail->ErrorInfo];
+    }
+}
+
+// ── Client-initiated form: final PDF (both stages complete) ──────────────────
+// Called when Taylor completes the artist section for a client-initiated form.
+// Renders a self-contained HTML document from merged $all_data, PDFs it, emails it.
+
+function send_completion_pdf($all_data, $settings) {
+    $esc = function($v) { return htmlspecialchars((string)($v ?? ''), ENT_QUOTES, 'UTF-8'); };
+
+    // Provisions
+    $prov_html  = '';
+    $prov_count = 0;
+    foreach (($settings['provisions'] ?? []) as $prov) {
+        $val = $all_data['provisions'][$prov_count] ?? null;
+        $prov_html .= '<tr><td class="lbl">' . $esc($prov['title']) . '</td><td>';
+        switch ($prov['type'] ?? 'checkbox') {
+            case 'yn':
+            case 'yn_details':
+                $ans = is_array($val) ? strtoupper($val[0] ?? '') : strtoupper((string)$val);
+                $prov_html .= '<strong>' . ($ans === 'Y' ? 'YES' : ($ans === 'N' ? 'NO' : '&mdash;')) . '</strong>';
+                if (($prov['type'] ?? '') === 'yn_details' && is_array($val) && !empty($val[1]))
+                    $prov_html .= ' &mdash; ' . $esc($val[1]);
+                break;
+            case 'checkbox':
+                $prov_html .= $val ? '&#9745; Agreed' : '&#9744; Not checked';
+                break;
+            default:
+                $prov_html .= $esc(is_array($val) ? implode(', ', $val) : $val);
+        }
+        $prov_html .= '</td></tr>';
+        $prov_count++;
+    }
+
+    $artist_sig_html = !empty($all_data['signature_artist_data'])
+        ? '<img src="' . $esc($all_data['signature_artist_data']) . '" style="max-width:380px;max-height:110px;border:1px solid #bbb;" />'
+        : '&mdash;';
+
+    $client_sig_html = '';
+    if (!empty($all_data['signature_client_data'])) {
+        $client_sig_html = '<img src="' . $esc($all_data['signature_client_data']) . '" style="max-width:380px;max-height:110px;border:1px solid #bbb;" />';
+    } elseif (!empty($all_data['signature_client_typed'])) {
+        $client_sig_html = '<span style="font-size:20px;font-style:italic;font-family:Georgia,serif;color:#1a1a8c;">'
+            . $esc($all_data['signature_client_typed']) . '</span>';
+    } else {
+        $client_sig_html = '&mdash;';
+    }
+
+    $dob = '';
+    if (!empty($all_data['dobY']) && !empty($all_data['dobM']) && !empty($all_data['dobD']))
+        $dob = sprintf('%04d-%02d-%02d', $all_data['dobY'], $all_data['dobM'], $all_data['dobD']);
+
+    $form_name = $settings['name'] ?? 'Tattoo';
+    $business  = $settings['business_name'] ?? ($settings['name'] ?? '');
+    $header    = $settings['header'] ?? '';
+
+    $html = '<!DOCTYPE html><html lang="en"><head><meta charset="UTF-8" />'
+        . '<title>' . $esc($form_name) . ' Release Form</title>'
+        . '<style>'
+        . 'body{font-family:Arial,sans-serif;font-size:12px;color:#111;margin:20px}'
+        . 'h1{font-size:16px;margin-bottom:2px}'
+        . 'h2{font-size:13px;border-bottom:1px solid #999;padding-bottom:3px;margin-top:16px}'
+        . 'table{border-collapse:collapse;width:100%;margin-bottom:10px}'
+        . 'td,th{padding:4px 8px;border:1px solid #ccc;vertical-align:top}'
+        . 'th{background:#f0f0f0;text-align:left}'
+        . 'td.lbl{font-weight:bold;width:140px;background:#fafafa}'
+        . '</style></head><body>'
+        . '<h1>' . $esc($form_name) . ' Release Form</h1>'
+        . '<p style="font-size:11px;color:#555">' . $esc($business) . ($header ? ' &mdash; ' . $esc($header) : '') . '</p>'
+        . '<p style="font-size:11px;color:#555">'
+        . 'Client submitted: ' . $esc($all_data['submitted_at'] ?? '') . ' &nbsp;|&nbsp; '
+        . 'Artist completed: ' . $esc($all_data['artist_completed_at'] ?? '') . '</p>'
+        . '<h2>Client Information</h2><table>'
+        . '<tr><td class="lbl">Name</td><td>'    . $esc($all_data['name']    ?? '') . '</td></tr>'
+        . '<tr><td class="lbl">Address</td><td>' . $esc($all_data['address'] ?? '') . '</td></tr>'
+        . '<tr><td class="lbl">Date of Birth</td><td>' . $esc($dob) . '</td></tr>'
+        . '<tr><td class="lbl">Phone</td><td>'   . $esc($all_data['phone']   ?? '') . '</td></tr>'
+        . '<tr><td class="lbl">Email</td><td>'   . $esc($all_data['email']   ?? '') . '</td></tr>'
+        . '</table>'
+        . '<h2>Artist Section</h2><table>'
+        . '<tr><td class="lbl">Artist</td><td>'    . $esc($all_data['artist'] ?? '') . '</td></tr>'
+        . '<tr><td class="lbl">Placement</td><td>' . $esc($all_data['fields'][0] ?? '') . '</td></tr>'
+        . '</table>';
+    if ($prov_html) {
+        $html .= '<h2>Provisions</h2><table>'
+            . '<tr><th>Provision</th><th>Response</th></tr>'
+            . $prov_html . '</table>';
+    }
+    $html .= '<h2>Signatures</h2><table>'
+        . '<tr><td class="lbl">Artist Signature</td><td>' . $artist_sig_html . '</td></tr>'
+        . '<tr><td class="lbl">Client Signature</td><td>' . $client_sig_html . '</td></tr>'
+        . '<tr><td class="lbl">E-Sign Consent</td><td>'  . (!empty($all_data['esign_consent']) ? '&#9745; Agreed' : '&mdash;') . '</td></tr>'
+        . '</table></body></html>';
+
+    $autoload = __DIR__ . '/vendor/autoload.php';
+    if (!file_exists($autoload)) return 'vendor/autoload.php missing — DOMPDF not installed on server';
+    require_once $autoload;
+    try {
+        $opts = new \Dompdf\Options();
+        $opts->setChroot(__DIR__);
+        $dompdf = new \Dompdf\Dompdf($opts);
+        $dompdf->setBasePath(__DIR__ . '/');
+        $dompdf->loadHtml($html, 'UTF-8');
+        $dompdf->render();
+    } catch (\Throwable $e) {
+        error_log('send_completion_pdf DOMPDF: ' . $e->getMessage());
+        return 'DOMPDF: ' . $e->getMessage();
+    }
+
+    require_once __DIR__ . '/smtp_config.php';
+    require_once __DIR__ . '/phpmailer/PHPMailer.php';
+    require_once __DIR__ . '/phpmailer/SMTP.php';
+    require_once __DIR__ . '/phpmailer/Exception.php';
+    $client_name  = $all_data['name'] ?? 'Client';
+    $client_email = $all_data['email'] ?? '';
+    $f_name  = 'release_form_' . preg_replace('/[^a-z0-9]+/i', '_', $client_name) . '.pdf';
+    $subject = ($settings['email_subject'] ?? 'Signed Release Form') . ' [' . $client_name . '] — FINAL';
+    $mail = new \PHPMailer\PHPMailer\PHPMailer(true);
+    try {
+        $mail->isSMTP();
+        $mail->Host       = SMTP_HOST;
+        $mail->SMTPAuth   = true;
+        $mail->Username   = SMTP_USER;
+        $mail->Password   = SMTP_PASS;
+        $mail->SMTPSecure = \PHPMailer\PHPMailer\PHPMailer::ENCRYPTION_STARTTLS;
+        $mail->Port       = SMTP_PORT;
+        $mail->setFrom(SMTP_FROM, SMTP_NAME);
+        $mail->addAddress($settings['email_to']);
+        if ($client_email) $mail->addCC($client_email);
+        $mail->Subject = $subject;
+        $mail->isHTML(true);
+        $mail->Body    = '<p>The tattoo release form for <strong>' . htmlspecialchars($client_name) . '</strong> is fully completed and signed. The finalised form is attached.</p>';
+        $mail->AltBody = "Release form for {$client_name} is fully completed. The finalised PDF is attached.";
+        $mail->addStringAttachment($dompdf->output(), $f_name, \PHPMailer\PHPMailer\PHPMailer::ENCODING_BASE64, 'application/pdf');
+        $mail->send();
+        return true;
+    } catch (\PHPMailer\PHPMailer\Exception $e) {
+        error_log('send_completion_pdf mailer: ' . $e->getMessage());
+        return 'Email failed: ' . $e->getMessage();
+    }
+}
+
 function display_label($input, $title=null) {
 	global $settings;
 

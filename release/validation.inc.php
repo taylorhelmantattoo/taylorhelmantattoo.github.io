@@ -61,16 +61,22 @@ if($_REQUEST['test']) {
 	$first_error=null;
 	$errors=array();
 
+	// Determine client mode using BOTH the GET param (direct URL load) AND the hidden
+	// workflow_mode POST field. The JS AJAX calls strip all URL params, so
+	// workflow_mode survives as the authoritative source during validation and submit.
+	$is_client_mode = (isset($_GET['mode']) && $_GET['mode'] === 'client')
+	               || (isset($_REQUEST['workflow_mode']) && $_REQUEST['workflow_mode'] === 'client');
+
 	// artist (skip in CLIENT_ONLY_MODE — artist section not rendered for public clients)
 	if(is_array($settings['artists']) && count($settings['artists'])>0 && (!$_REQUEST["artist"] || $_REQUEST["artist"] == "-1")
-	   && (!isset($_GET['mode']) || $_GET['mode'] !== 'client')) {
+	   && !$is_client_mode) {
 		array_push($errors, 'Select your <b>artist</b>');
 		if(!$first_error) $first_error = 'artist';
 	}
 
 	// fields (skip in CLIENT_ONLY_MODE — placement/artist fields not rendered for public clients)
 	$count=0;
-	if($settings['fields'] && (!isset($_GET['mode']) || $_GET['mode'] !== 'client')) {
+	if($settings['fields'] && !$is_client_mode) {
 		foreach($settings['fields'] as $field) {
 			$required=false;
 			if(is_array($field)) {
@@ -186,7 +192,7 @@ if($_REQUEST['test']) {
 	}
 
 	// artist signature (skip in CLIENT_ONLY_MODE — artist section not rendered for public clients)
-	if($settings['artist_signature'] && (!isset($_GET['mode']) || $_GET['mode'] !== 'client'))
+	if($settings['artist_signature'] && !$is_client_mode)
 		if(!$_REQUEST['signature_artist_status']) {
 			array_push($errors, 'Please get your <b>artist</b> to sign their <b>signature field</b>');
 			if(!$first_error) $first_error = 'artist_signature';
