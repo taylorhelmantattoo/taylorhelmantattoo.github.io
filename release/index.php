@@ -523,7 +523,7 @@ if(is_array($settings['artists']) && count($settings['artists'])>0) {
 }
 
 // top header
-?><fieldset id="top">
+?><fieldset id="top"<?php if (defined('TWO_STEP_CLIENT')) echo ' style="display:none;"'; ?>>
 	<div class="legend">Let us do this part:</div>
 <?php
 
@@ -936,14 +936,10 @@ By the parental/guardian signature they, on my behalf, release all claims that b
 
 			<p class="photo-helper-text">Please provide a clear photo of your <strong>government issued photo ID</strong>.</p>
 
-			<div class="photo-mode-buttons">
-				<button type="button" id="btn-upload-mode" class="photo-mode-btn photo-mode-active" onclick="switchPhotoMode('upload')">&#128206; Upload ID Photo</button>
-				<button type="button" id="btn-camera-mode" class="photo-mode-btn" onclick="switchPhotoMode('camera')">&#128247; Take Photo</button>
-			</div>
+
 
 			<div id="uploadcontainer">
 				<label id="os_photo_msg" for="os_photo" class="photo-drop-zone">
-					<div class="photo-drop-icon">&#11014;</div>
 					<span class="photo-drop-label">Tap to select an image</span>
 					<span class="photo-drop-hint">JPG or PNG &middot; max 10 MB</span>
 				</label>
@@ -952,26 +948,13 @@ By the parental/guardian signature they, on my behalf, release all claims that b
 					<img id="photo-preview-img" src="" alt="ID Preview" />
 					<div class="photo-preview-actions">
 						<span id="photo-file-info" class="photo-file-info"></span>
-						<button type="button" class="photo-remove-btn" onclick="removeUploadedPhoto()">&#10005; Remove &amp; retake</button>
+						<button type="button" class="photo-remove-btn" onclick="removeUploadedPhoto()">Remove &amp; retake</button>
 					</div>
 				</div>
 				<div id="photo-error-msg" class="photo-error" style="display:none"></div>
 			</div>
 
-			<div id="cameracontainer" style="display:none">
-				<p class="camera-instruction">Ensure all 4 corners of your ID are visible within the frame.</p>
-				<div class="camera-viewport">
-					<video class="photo" id="monitor" autoplay playsinline></video>
-					<canvas class="photo" id="photo" name="photo"></canvas>
-					<div class="camera-id-overlay"></div>
-				</div>
-				<div id="snapbutton-area">
-					<input type="button" id="snapbutton" class="photo-capture-btn" value="CAPTURE PHOTO" onclick="snapshot()" />
-				</div>
-				<div id="retake-btn-area" style="display:none">
-					<input type="button" id="retake-btn" class="photo-retake-btn" value="&#8629; RETAKE" onclick="retakePhoto()" />
-				</div>
-			</div>
+
 
 			<div id="photo-checklist" style="display:none">
 				<ul class="id-checklist">
@@ -983,32 +966,7 @@ By the parental/guardian signature they, on my behalf, release all claims that b
 				</ul>
 			</div>
 
-			<script type="text/javascript" src="js/camera.js"></script>
-			<script>
-			var photo_camera_mode = '<?=$camera?>';
-			var photo_panel_initialized = false;
-			function switchPhotoMode(mode) {
-				var upl = document.getElementById('uploadcontainer');
-				var cam = document.getElementById('cameracontainer');
-				var btnU = document.getElementById('btn-upload-mode');
-				var btnC = document.getElementById('btn-camera-mode');
-				if (mode === 'camera') {
-					upl.style.display = 'none';
-					cam.style.display = 'block';
-					btnC.classList.add('photo-mode-active');
-					btnU.classList.remove('photo-mode-active');
-					if (!photo_panel_initialized) {
-						photo_panel_initialized = true;
-						initializeCameraCapture(photo_camera_mode);
-					}
-				} else {
-					upl.style.display = 'block';
-					cam.style.display = 'none';
-					btnU.classList.add('photo-mode-active');
-					btnC.classList.remove('photo-mode-active');
-				}
-			}
-			</script>
+
 			<?php
 		}
 	?>

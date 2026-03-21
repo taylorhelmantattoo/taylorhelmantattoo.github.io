@@ -42,9 +42,13 @@ $settings['parent_header']      = '';
 
 /* Artists Names */
 $settings['artists']            = array(
+                                        'Kristine Vodon',
                                         'Taylor Helman',
+                                        'Shannon Rice',
+                                        'Asha Rani',
+                                        'Hailey Brown',
                                 );
-$settings['allow_other_artist'] = false;
+$settings['allow_other_artist'] = true;
 
 /* Provisions */
 $settings['provisions']         = array(
