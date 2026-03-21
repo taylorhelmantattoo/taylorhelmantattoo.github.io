@@ -1,4 +1,4 @@
-﻿<?php
+<?php
 $cam_width=600;
 $cam_height=450;
 
