@@ -1,0 +1,6 @@
+smtp_config.php
+.vscode/sftp.json
+tmp/
+*.swp
+*.swo
+*.swn

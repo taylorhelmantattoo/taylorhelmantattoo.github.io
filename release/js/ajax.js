@@ -633,14 +633,14 @@ function refresh_countdown(time) {
 		window.onbeforeunload = null;
 		// refresh by not using history plz
 		result = document.getElementById('redirect_url').innerHTML;
-		setTimeout("location.replace('"+result+"')",10);
+			setTimeout(function(){ location.replace(result); }, 10);
 	}
 
 	if(time==0)
 		return false;
 
 	time=time-1;
-	setTimeout("refresh_countdown("+time+")",1000);
+	setTimeout(function(){ refresh_countdown(time); }, 1000);
 }
 
 // warn before leaving page without submitting
@@ -648,4 +648,48 @@ window.onbeforeunload = confirmExit;
 function confirmExit()
 {
 	return "Are you sure you want to leave this release form?";
+}
+
+// ── draw_init – initializes signature canvases and typed-name auto-fill ──────
+function draw_init() {
+	// Initialize every signature canvas (skip the photo/camera canvas)
+	var canvases = document.getElementsByTagName('canvas');
+	for (var i = 0; i < canvases.length; i++) {
+		if (canvases[i].id !== 'photo') {
+			initialize_signature(canvases[i].id);
+		}
+	}
+
+	// When the Name field is typed, mirror it as a cursive signature
+	var nameInput = document.getElementById('name');
+	if (nameInput) {
+		nameInput.addEventListener('input', function() {
+			redraw_typed_signature('signature_client', this.value);
+		});
+	}
+
+	insertDate();
+}
+
+// Renders typed text onto a signature canvas as a handwriting-style signature.
+// Clears any drawn strokes first so draw and type are mutually exclusive.
+function redraw_typed_signature(canvasId, text) {
+	var canvas = document.getElementById(canvasId);
+	if (!canvas || canvas.disabled) return;
+
+	var ctx = canvas.getContext('2d');
+	ctx.clearRect(0, 0, canvas.width, canvas.height);
+	ctx.fillStyle = '#FFF';
+	ctx.fillRect(0, 0, canvas.width, canvas.height);
+
+	if (text && text.trim()) {
+		var fontSize = Math.min(36, Math.floor(canvas.height * 0.45));
+		ctx.font = 'italic ' + fontSize + 'px Georgia, "Times New Roman", serif';
+		ctx.fillStyle = '#00008B';
+		ctx.textBaseline = 'middle';
+		ctx.fillText(text.trim(), 12, canvas.height / 2);
+		canvas_status(canvasId, true);
+	} else {
+		canvas_status(canvasId, false);
+	}
 }
