@@ -7,8 +7,13 @@ var passcode="";
 var is_safari = /(iPhone|iPod|iPad).*AppleWebKit(?!.*Safari)/i.test(navigator.userAgent);
 var is_apple = /(iPhone|iPod|iPad)/i.test(navigator.userAgent);
 
-var url = window.location.href.split('?');
-url = url[0];
+var _urlParts = window.location.href.split('?');
+var _urlKeep = (_urlParts[1] || '').split('&').filter(function(p) {
+	var k = p.split('=')[0];
+	return k === 'mode' || k === 'release' || k === 'step' || k === 'client_ref';
+});
+var url = _urlParts[0] + (_urlKeep.length ? '?' + _urlKeep.join('&') : '');
+function _qs(u, param) { return u.indexOf('?') >= 0 ? u + '&' + param : u + '?' + param; }
 var autocomplete_threshold=8;
 var autocomplete_require_space=1;
 
@@ -52,7 +57,7 @@ function autocomplete_client(name)
 				}
 			}
 		}
-		xmlHttp.open("POST", url+'?autocomplete='+name, false);
+		xmlHttp.open("POST", _qs(url,'autocomplete='+name), false);
 
 		xmlHttp.setRequestHeader("Content-type", "application/x-www-form-urlencoded")
 		xmlHttp.send();
@@ -253,7 +258,7 @@ function MakeRequest(form)
    }
    var values=getquerystring(form,no_images=true);
 
-   xmlHttp.open("POST", url+'?test=true', false);
+   xmlHttp.open("POST", _qs(url,'test=true'), false);
 
    xmlHttp.setRequestHeader("Content-type", "application/x-www-form-urlencoded")
    xmlHttp.send(values);
@@ -330,7 +335,7 @@ function enterpasscode(val)
 				if(xmlHttp.responseText == "correct")
 					correctcode=true;
 		}
-   		xmlHttp.open("POST", url+'?test_passcode='+passcode, false);
+   		xmlHttp.open("POST", _qs(url,'test_passcode='+passcode), false);
 		xmlHttp.setRequestHeader("Content-type", "application/x-www-form-urlencoded")
 		xmlHttp.send();
 
@@ -555,7 +560,7 @@ function os_camera_upload() {
 		fd.append("image", file);
 		
 		var xhr = new XMLHttpRequest();
-		xhr.open("POST", url+'?os_submission', false);
+		xhr.open("POST", _qs(url,'os_submission'), false);
 		xhr.onload = function() {
 			img_data = xhr.responseText;
 			handlePhotoUploadPreview(img_data, fileInfoBase);
@@ -605,7 +610,7 @@ function sendpdf() {
 	
 	var values=getquerystring(form);
 
-   	xmlHttp.open("POST", url+'?topdf&passcode='+passcode, false);
+   	xmlHttp.open("POST", _qs(url,'topdf&passcode='+passcode), false);
 	xmlHttp.setRequestHeader("Content-type", "application/x-www-form-urlencoded")
 	xmlHttp.send(values);
  

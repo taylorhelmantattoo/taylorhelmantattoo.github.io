@@ -44,7 +44,7 @@ function NFDo(what) {
 			niceforms[q].start();
 		}
 		else { //Unload Niceforms
-			niceforms[q].unload();
+			if (typeof niceforms[q].unload === 'function') niceforms[q].unload();
 			NF[q] = "";
 		}
 	}}
